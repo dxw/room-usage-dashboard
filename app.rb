@@ -41,13 +41,13 @@ end
 # Fetch the next 2 events for this room
 def fetch_events(calendar_id)
   response = service.list_events(calendar_id,
-                                 max_results: 2,
+                                 max_results: 5,
                                  single_events: true,
                                  order_by: 'startTime',
                                  time_min: Time.now.iso8601)
+
   response.items
 end
-
 
 get '/' do
   # Initialize the API

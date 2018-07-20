@@ -1,28 +1,48 @@
-%h1 Room Usage
+%html
+  %head
+    %link{rel: 'stylesheet', href: 'styles.css'}
 
-%h2 Ground Floor Meeting Room
-- if @ground_floor_events
-  %ul
-    - @ground_floor_events.each do |event|
-      %li
-        %strong
-          = event.summary
-        = "(#{event.start.date || event.start.date_time})"
+  %body
+    %h1 Room Usage
 
-%h2 First Floor Meeting Room (The Hide)
-- if @the_hide_events
-  %ul
-    - @the_hide_events.each do |event|
-      %li
-        %strong
-          = event.summary
-        = "(#{event.start.date || event.start.date_time})"
+    .calendar
+      .room
+        %h2 Ground Floor Meeting Room
+        - if @ground_floor_events
+          %ul
+            - @ground_floor_events.each do |event|
+              %li
+                %strong
+                  = event.summary
+                %br/
+                = "(#{event.start.date || event.start.date_time} - (#{event.end.date || event.end.date_time})"
+                %br/
+                %em
+                  = "Organised by: #{event.organizer.display_name || event.organizer.email}"
+      .room
+        %h2 First Floor Meeting Room (The Hide)
+        - if @the_hide_events
+          %ul
+            - @the_hide_events.each do |event|
+              %li
+                %strong
+                  = event.summary
+                %br/
+                = "(#{event.start.date || event.start.date_time} - (#{event.end.date || event.end.date_time})"
+                %br/
+                %em
+                  = "Organised by: #{event.organizer.display_name || event.organizer.email}"
 
-%h2 Wellbeing Room
-- if @wellbeing_room_events
-  %ul
-    - @wellbeing_room_events.each do |event|
-      %li
-        %strong
-          = event.summary
-        = "(#{event.start.date || event.start.date_time})"
+      .room
+        %h2 Wellbeing Room
+        - if @wellbeing_room_events
+          %ul
+            - @wellbeing_room_events.each do |event|
+              %li
+                %strong
+                  = event.summary
+                %br/
+                = "(#{event.start.date || event.start.date_time} - (#{event.end.date || event.end.date_time})"
+                %br/
+                %em
+                  = "Organised by: #{event.organizer.display_name || event.organizer.email}"
