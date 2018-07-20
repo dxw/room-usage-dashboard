@@ -1,4 +1,5 @@
 require 'dotenv/load'
+require 'active_support/core_ext/date_time'
 require 'haml'
 require 'sinatra'
 require 'google/apis/calendar_v3'
