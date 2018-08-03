@@ -1,18 +1,49 @@
-$white: #f2f2f2;
+@import url('https://fonts.googleapis.com/css?family=Lato');
+@import 'normalize';
+
+$brand-primary: #006998;
+$brand-secondary: #1ca4de;
+$accent-colour: #5b527f;
+
+$dxw-light-green: #3bc492;
+$dxw-green: #006874;
+$dxw-orange: #fe603a;
+$dxw-yellow: #ffb72c;
+$dxw-red: #9f1f1f;
+$dxw-pink: #b15fa2;
+$dxw-turquoise: #00a0b0;
+$black: #283133;
+$dark-grey: #4c535a;
+$grey: #95989a;
+$medium-grey: #eeeeee;
+$light-grey: #f2f2f2;
+$white: #ffffff;
+
+* {
+  box-sizing: border-box;
+}
 
 body {
-  background-color: $white;
+  background-color: $light-grey;
   color: #000;
-  font-family: helvetica, arial, sans-serif;
+  font-family: 'Lato', helvetica, arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+  text-align: center;
+}
+
+h2 {
+  font-size: 2em;
 }
 
 h1,
 h2 {
-  color: #369;
-}
-
-strong {
-  color: #69c;
+  color: $brand-primary;
 }
 
 .calendar {
@@ -21,7 +52,8 @@ strong {
 
 .room {
   float: left;
-  width: 32%;
+  width: 33.333%;
+  padding: 2em;
 }
 
 ul {
@@ -30,10 +62,55 @@ ul {
 }
 
 li {
-  padding-top: 0.5em;
+  padding-top: 1em;
+}
+
+.title {
+  color: $white;
+  background-color: $brand-secondary;
+  padding: 4px 7px;
+  display: inline-block;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.datetime {
+  color: $dark-grey;
 }
 
 em {
+  font-style: normal;
   font-size: 0.8em;
   margin-top: 5px;
+}
+
+.organiser {
+  color: $dark-grey;
+}
+
+.light-blue {
+  color: $brand-secondary;
+}
+
+.dark-blue {
+  color: $brand-primary;
+}
+
+.turquoise {
+  color: $dxw-turquoise;
+}
+
+.bg-light-blue {
+  color: $white;
+  background-color: $brand-secondary;
+}
+
+.bg-dark-blue {
+  color: $white;
+  background-color: $brand-primary;
+}
+
+.bg-turquoise {
+  color: $white;
+  background-color: $dxw-turquoise;
 }
