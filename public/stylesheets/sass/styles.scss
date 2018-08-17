@@ -19,6 +19,10 @@ $medium-grey: #eeeeee;
 $light-grey: #f2f2f2;
 $white: #ffffff;
 
+$room1: $brand-secondary;
+$room2: $brand-primary;
+$room3: $dxw-turquoise;
+
 * {
   box-sizing: border-box;
 }
@@ -27,90 +31,123 @@ body {
   background-color: $light-grey;
   color: #000;
   font-family: 'Lato', helvetica, arial, sans-serif;
-  font-size: 18px;
+  font-size: 24px;
   line-height: 1.5;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
 
 h1 {
-  text-align: center;
-}
-
-h2 {
-  font-size: 2em;
-}
-
-h1,
-h2 {
-  color: $brand-primary;
+  padding-left: 40px;
+  color: $black;
 }
 
 .calendar {
-  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr)
 }
 
 .room {
-  float: left;
-  width: 33.333%;
-  padding: 2em;
-}
-
-ul {
-  padding-left: 0;
-  list-style-type: none;
-}
-
-li {
-  padding-top: 1em;
-}
-
-.title {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: stretch;
   color: $white;
-  background-color: $brand-secondary;
-  padding: 4px 7px;
-  display: inline-block;
-  font-weight: bold;
-  letter-spacing: 1px;
+
+  h2 {
+    font-size: 32px;
+    padding-left: 40px;
+    margin: 0;
+  }
+
+  &.room__1 {
+    h2 {
+      color: $room1;
+    }
+    ul li {
+      background-color: $room1;
+      &:nth-child(odd) {
+        background-color: darken($room1, 4);
+      }
+    }
+  }
+
+  &.room__2 {
+    h2 {
+      color: $room2;
+    }
+    ul li {
+      background-color: $room2;
+      &:nth-child(odd) {
+        background-color: darken($room2, 4);
+      }
+
+      .title {
+        border-left: 1px solid rgba(255,255,255,0.7);
+      }
+    }
+  }
+
+  &.room__3 {
+    h2 {
+      color: $room3;
+    }
+    ul li {
+      background-color: $room3;
+      &:nth-child(odd) {
+        background-color: darken($room3, 4);
+      }
+
+      .title {
+        border-left: 1px solid rgba(255,255,255,0.7);
+      }
+    }
+  }
+
+  ul {
+    padding-left: 0;
+    list-style-type: none;
+    display: grid;
+    grid-template-rows: 1fr;
+
+    li {
+      padding: 30px;
+      display: grid;
+      grid-gap: 20px 5px;
+      grid-template-columns: 130px auto;
+
+      &:nth-child(odd) {
+        background-color: red;
+      }
+
+      .title {
+        border-left: 1px solid rgba(255,255,255,0.7);
+      }
+    }
+  }
+
+  .title {
+    color: $white;
+    font-weight: bold;
+    padding-left: 10px;
+    border-left: 3px solid $white;
+  }
+
+  .datetime {
+    font-style: normal;
+    font-weight: bold;
+  }
+
+  em.organiser {
+    display: block;
+    font-style: normal;
+    font-size: 0.8em;
+    margin-top: 5px;
+    opacity: 0.7;
+    grid-column-start: 2;
+    padding-left: 13px;
+  }
 }
 
-.datetime {
-  color: $dark-grey;
-}
 
-em {
-  font-style: normal;
-  font-size: 0.8em;
-  margin-top: 5px;
-}
-
-.organiser {
-  color: $dark-grey;
-}
-
-.light-blue {
-  color: $brand-secondary;
-}
-
-.dark-blue {
-  color: $brand-primary;
-}
-
-.turquoise {
-  color: $dxw-turquoise;
-}
-
-.bg-light-blue {
-  color: $white;
-  background-color: $brand-secondary;
-}
-
-.bg-dark-blue {
-  color: $white;
-  background-color: $brand-primary;
-}
-
-.bg-turquoise {
-  color: $white;
-  background-color: $dxw-turquoise;
-}
