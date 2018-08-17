@@ -45,7 +45,8 @@ def fetch_events(calendar_id)
                                  max_results: 5,
                                  single_events: true,
                                  order_by: 'startTime',
-                                 time_min: Time.now.iso8601)
+                                 time_min: Time.now.iso8601,
+                                 time_max: Date.today.+(1).to_time.iso8601)
 
   response.items
 end
