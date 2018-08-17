@@ -4,6 +4,8 @@
 
   %body
     .calendar
+      %h1.light-blue
+        = "#{@today.strftime('%B %e %Y')}"
       .room
         %h2.light-blue Main Meeting Room
         - if @ground_floor_events
@@ -12,7 +14,7 @@
               %li
                 .title.bg-light-blue
                   = event.summary || 'Unspecified'
-                .datetime= "#{event.start.date || event.start.date_time.strftime("%b %e, %l:%M %P")} – #{event.end.date || event.end.date_time.strftime("%l:%M %P")}"
+                .datetime= "#{event.start.date || event.start.date_time.strftime("%l:%M %P")} – #{event.end.date || event.end.date_time.strftime("%l:%M %P")}"
                 %em.organiser
                   - if event.organizer
                     = "#{event.organizer.display_name || event.organizer.email}"
@@ -27,7 +29,7 @@
               %li
                 .title.bg-dark-blue
                   = event.summary || 'Unspecified'
-                .datetime= "#{event.start.date || event.start.date_time.strftime("%b %e, %l:%M %P")} – #{event.end.date || event.end.date_time.strftime("%l:%M %P")}"
+                .datetime= "#{event.start.date || event.start.date_time.strftime("%l:%M %P")} – #{event.end.date || event.end.date_time.strftime("%l:%M %P")}"
                 %em.organiser
                   - if event.organizer
                     = "#{event.organizer.display_name || event.organizer.email}"
@@ -42,7 +44,7 @@
               %li
                 .title.bg-turquoise
                   = event.summary || 'Unspecified'
-                .datetime= "#{event.start.date || event.start.date_time.strftime("%b %e, %l:%M %P")} – #{event.end.date || event.end.date_time.strftime("%l:%M %P")}"
+                .datetime= "#{event.start.date || event.start.date_time.strftime("%l:%M %P")} – #{event.end.date || event.end.date_time.strftime("%l:%M %P")}"
                 %em.organiser
                   - if event.organizer
                     = "#{event.organizer.display_name || event.organizer.email}"

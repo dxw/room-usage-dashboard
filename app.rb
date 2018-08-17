@@ -56,7 +56,7 @@ get '/' do
   @the_hide_events = fetch_events('dxw.com_3936393930353336393539@resource.calendar.google.com')
   @ground_floor_events = fetch_events('dxw.com_2d36303034323634352d353334@resource.calendar.google.com')
   @wellbeing_room_events = fetch_events('dxw.com_3437393236383531353437@resource.calendar.google.com')
+  @today = Date.today.to_time.iso8601
 
   haml :index
 end
-
