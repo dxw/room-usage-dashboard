@@ -1,0 +1,4 @@
+# https://github.com/npalm/terraform-aws-ecs-service/blob/master/README.md
+terraform-aws-ecs-service:
+  source: "git@github.com:npalm/terraform-aws-ecs-service"
+  version: "0.2.0"
