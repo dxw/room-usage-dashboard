@@ -2,8 +2,8 @@
 
 ## Getting Started
 
- - Request a client ID and client secret from developers.google.com, making sure
-     it has access to the Google Calendar API save these into `.env`
+ - [Request a client ID and secret from Google](https://developers.google.com/calendar/quickstart/ruby),
+    by clicking 'ENABLE THE GOOGLE CALENDAR API' and save them into `.env`.
 
      ```
      GOOGLE_CLIENT_ID=…
