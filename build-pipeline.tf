@@ -93,7 +93,7 @@ resource "aws_codebuild_project" "app_build" {
 ### CodePipeline
 resource "aws_codepipeline" "app_pipeline" {
   name     = "app-${terraform.workspace}-pipeline"
-  role_arn = "${aws_iam_role.web_codepipeline_role.arn}"
+  role_arn = "${aws_iam_role.app_codepipeline_role.arn}"
 
   artifact_store {
     location = "${aws_s3_bucket.app_source.bucket}"
