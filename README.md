@@ -13,4 +13,5 @@
      user. The console will display a URL that you need to visit in your
      browser, after you authorise the request, you'll be given a token. Copy and
      paste this into the console and press enter
- - You can run the app locally with `rackup`
+ - You can run the app locally with `docker-compose up`
+ - Visit the dashboard at http://localhost:9292/

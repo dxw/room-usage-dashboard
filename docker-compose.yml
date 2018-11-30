@@ -1,0 +1,9 @@
+version: '3.1'
+services:
+  web:
+    build: .
+    ports:
+      - '9292:9292'
+    container_name: room-usage-dashboard_web
+    stdin_open: true
+    tty: true
