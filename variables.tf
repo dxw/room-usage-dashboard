@@ -2,6 +2,10 @@ variable "region" {
   description = "AWS Region"
 }
 
+variable "infrastructure_name" {
+  description = "Infrastructure name"
+}
+
 variable "dalmatian_role" {
   description = "Dalmatian Role"
 }
@@ -12,6 +16,10 @@ variable "account_id" {
 
 variable "environment" {
   description = "Environment"
+}
+
+variable "root_domain_zone" {
+  description = "Root domain zone"
 }
 
 variable "track_revision" {
