@@ -4,5 +4,5 @@ locals {
   app_service_name = "app"
 
   app_container_entrypoint = ["./docker-entrypoint.sh"]
-  app_container_command    = ["rackup","--host","0.0.0.0","-p"]
+  app_container_command    = ["rackup", "--host", "0.0.0.0", "-p"]
 }
