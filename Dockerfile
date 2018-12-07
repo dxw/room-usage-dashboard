@@ -14,4 +14,4 @@ COPY . $INSTALL_PATH
 
 EXPOSE 9292
 
-CMD ["rackup", "--host", "0.0.0.0", "-p", "9292"]
+CMD ["rackup", "--host", "0.0.0.0"]
