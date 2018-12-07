@@ -56,7 +56,7 @@ module "app-service" {
   service_desired_count = 2
 
   vpc_id   = "${data.aws_vpc.dashboards_vpc.id}"
-  vpc_cidr = "${data.aws_vpc.dashboards.cidr_block}"
+  vpc_cidr = "${data.aws_vpc.dashboards_vpn.cidr_block}"
 
   lb_subnetids = [
     "${data.aws_subnet.dashboards_public_subnet_a.id}",

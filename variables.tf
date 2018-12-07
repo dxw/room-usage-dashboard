@@ -22,6 +22,10 @@ variable "root_domain_zone" {
   description = "Root domain zone"
 }
 
+variable "internal_domain_zone" {
+  description = "Internal domain zone"
+}
+
 variable "track_revision" {
   description = "Git branch to track"
 }
