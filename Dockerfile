@@ -1,4 +1,4 @@
-FROM ruby
+FROM ruby:2.5.3
 
 ENV INSTALL_PATH /srv/room-usage-dashboard/
 RUN mkdir -p $INSTALL_PATH
