@@ -37,7 +37,7 @@ data "template_file" "app_task_role" {
 
   vars {
     ssm_resource = "arn:aws:ssm:${var.region}:${var.account_id}:parameter/${terraform.workspace}/*"
-    kms_key      = "${aws_kms_key.mytvh_ssm.arn}"
+    kms_key      = "${aws_kms_key.app_ssm.arn}"
   }
 }
 
