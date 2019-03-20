@@ -59,9 +59,8 @@ module "app-service" {
   vpc_cidr = "${data.aws_vpc.dashboards_vpc.cidr_block}"
 
   lb_subnetids = [
-    "${data.aws_subnet.dashboards_public_subnet_a.id}",
-    "${data.aws_subnet.dashboards_public_subnet_b.id}",
-    "${data.aws_subnet.dashboards_public_subnet_c.id}",
+    "${element(data.aws_subnet.extra_public.id, 0)}",
+    "${element(data.aws_subnet.extra_public.id, 1)}",
   ]
 
   lb_internal = false
@@ -74,16 +73,7 @@ module "app-service" {
 
   service_launch_type = "EC2"
 
-  awsvpc_task_execution_role_arn = "${aws_iam_role.app_ecs_execution_role.arn}"
-  awsvpc_service_security_groups = ["${data.aws_security_group.ecs_security_group.id}"]
-
   task_role_arn = "${aws_iam_role.app_task_role.arn}"
-
-  awsvpc_service_subnetids = [
-    "${data.aws_subnet.dashboards_private_subnet_a.id}",
-    "${data.aws_subnet.dashboards_private_subnet_b.id}",
-    "${data.aws_subnet.dashboards_private_subnet_c.id}",
-  ]
 
   lb_target_group = {
     target_type    = "instance"
@@ -106,4 +96,6 @@ module "app-service" {
     certificate_arn = "${data.aws_acm_certificate.infrastructure_root_domain_wildcard.arn}"
     ssl_policy      = "ELBSecurityPolicy-TLS-1-2-2017-01"
   }
+
+  lb_security_groups = ["${data.aws_security_group.ecs_security_group.id}"]
 }
