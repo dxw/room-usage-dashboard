@@ -1,4 +1,4 @@
 # https://github.com/npalm/terraform-aws-ecs-service/blob/master/README.md
 terraform-aws-ecs-service:
   source: "git@github.com:npalm/terraform-aws-ecs-service"
-  version: "0.2.0"
+  version: "161601920308518b92c26d664fb38058c41fdb30"
