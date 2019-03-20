@@ -16,38 +16,63 @@ data "aws_subnet" "dashboards_private_subnet_a" {
   }
 }
 
-data "aws_subnet" "dashboards_private_subnet_b" {
+data "aws_subnet" "ecs_private" {
+  count = "${length(var.ecs_private_subnets)}"
+
   filter {
-    name   = "tag:Name"
-    values = ["dashboards-ecs-${var.environment}-ecs-vpc-private-eu-west-2b"]
+    name   = "cidr-block"
+    values = ["${lookup(var.ecs_private_subnets[count.index], "cidr")}"]
+  }
+
+  filter {
+    name   = "vpc-id"
+    values = ["${data.aws_vpc.dashboards_vpc.id}"]
   }
 }
 
-data "aws_subnet" "dashboards_private_subnet_c" {
+data "aws_route_table" "private_subnet_route_table" {
+  subnet_id = "${element(data.aws_subnet.ecs_private.*.id, 0)}"
+}
+
+data "aws_subnet" "ecs_public" {
+  count = "${length(var.ecs_public_subnets)}"
+
   filter {
-    name   = "tag:Name"
-    values = ["dashboards-ecs-${var.environment}-ecs-vpc-private-eu-west-2c"]
+    name   = "cidr-block"
+    values = ["${lookup(var.ecs_public_subnets[count.index], "cidr")}"]
+  }
+
+  filter {
+    name   = "vpc-id"
+    values = ["${data.aws_vpc.dashboards_vpc.id}"]
   }
 }
 
-data "aws_subnet" "dashboards_public_subnet_a" {
+data "aws_subnet" "extra_private" {
+  count = "${length(var.extra_private_subnets)}"
+
   filter {
-    name   = "tag:Name"
-    values = ["dashboards-ecs-${var.environment}-ecs-vpc-public-eu-west-2a"]
+    name   = "cidr-block"
+    values = ["${lookup(var.extra_private_subnets[count.index], "cidr")}"]
+  }
+
+  filter {
+    name   = "vpc-id"
+    values = ["${data.aws_vpc.dashboards_vpc.id}"]
   }
 }
 
-data "aws_subnet" "dashboards_public_subnet_b" {
-  filter {
-    name   = "tag:Name"
-    values = ["dashboards-ecs-${var.environment}-ecs-vpc-public-eu-west-2b"]
-  }
-}
+data "aws_subnet" "extra_public" {
+  count = "${length(var.extra_public_subnets)}"
 
-data "aws_subnet" "dashboards_public_subnet_c" {
   filter {
-    name   = "tag:Name"
-    values = ["dashboards-ecs-${var.environment}-ecs-vpc-public-eu-west-2c"]
+    name   = "cidr-block"
+    values = ["${lookup(var.extra_public_subnets[count.index], "cidr")}"]
+  }
+
+  filter {
+    name   = "vpc-id"
+    values = ["${data.aws_vpc.dashboards_vpc.id}"]
   }
 }
 
