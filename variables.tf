@@ -37,3 +37,27 @@ variable "app_github_token" {
 variable "cluster_name" {
   description = "Cluster Name"
 }
+
+variable "ecs_private_subnets" {
+  description = "ECS Private subnets"
+  type        = "list"
+  default     = []
+}
+
+variable "extra_private_subnets" {
+  description = "Extra Private subnets"
+  type        = "list"
+  default     = []
+}
+
+variable "ecs_public_subnets" {
+  description = "ECS Public subnets"
+  type        = "list"
+  default     = []
+}
+
+variable "extra_public_subnets" {
+  description = "Extra Public subnets"
+  type        = "list"
+  default     = []
+}

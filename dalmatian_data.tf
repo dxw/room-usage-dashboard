@@ -9,13 +9,6 @@ data "aws_ecs_cluster" "cluster" {
   cluster_name = "${var.cluster_name}"
 }
 
-data "aws_subnet" "dashboards_private_subnet_a" {
-  filter {
-    name   = "tag:Name"
-    values = ["dashboards-ecs-${var.environment}-ecs-vpc-private-eu-west-2a"]
-  }
-}
-
 data "aws_subnet" "ecs_private" {
   count = "${length(var.ecs_private_subnets)}"
 

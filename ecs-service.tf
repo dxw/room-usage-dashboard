@@ -59,8 +59,8 @@ module "app-service" {
   vpc_cidr = "${data.aws_vpc.dashboards_vpc.cidr_block}"
 
   lb_subnetids = [
-    "${element(data.aws_subnet.extra_public.id, 0)}",
-    "${element(data.aws_subnet.extra_public.id, 1)}",
+    "${element(data.aws_subnet.extra_public.*.id, 0)}",
+    "${element(data.aws_subnet.extra_public.*.id, 1)}",
   ]
 
   lb_internal = false
@@ -97,5 +97,5 @@ module "app-service" {
     ssl_policy      = "ELBSecurityPolicy-TLS-1-2-2017-01"
   }
 
-  lb_security_groups = ["${data.aws_security_group.ecs_security_group.id}"]
+  lb_security_group_ids = ["${data.aws_security_group.ecs_security_group.id}"]
 }
