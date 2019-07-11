@@ -97,5 +97,5 @@ module "app-service" {
     ssl_policy      = "ELBSecurityPolicy-TLS-1-2-2017-01"
   }
 
-  lb_security_group_ids = ["${data.aws_security_group.ecs_security_group.id}"]
+  lb_security_group_ids = ["${data.aws_security_group.ecs_alb_security_group.id}"]
 }
