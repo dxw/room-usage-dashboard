@@ -60,3 +60,7 @@ get '/' do
 
   haml :index
 end
+
+get '/check' do
+  'Im alive!'
+end
