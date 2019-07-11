@@ -9,7 +9,7 @@ data "template_file" "app_container_definition" {
   vars {
     image          = "${var.account_id}.dkr.ecr.${var.region}.amazonaws.com/${terraform.workspace}-app"
     container_name = "${terraform.workspace}-app"
-    container_port = "3000"
+    container_port = "9292"
     log_group      = "${aws_cloudwatch_log_group.app_service_logs.name}"
     log_region     = "${var.region}"
     entrypoint     = "${jsonencode(list("/bin/bash","-c",join(" ",concat(local.ssm_parameters_command, local.app_container_entrypoint, local.app_container_command))))}"
@@ -78,7 +78,7 @@ module "app-service" {
   lb_target_group = {
     target_type    = "instance"
     container_name = "${terraform.workspace}-app"
-    container_port = "3000"
+    container_port = "9292"
   }
 
   lb_health_check = [{
