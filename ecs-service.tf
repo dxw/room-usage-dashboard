@@ -76,6 +76,11 @@ module "app-service" {
 
   task_role_arn = "${aws_iam_role.app_task_role.arn}"
 
+  public_alb_whitelist = [
+    "37.157.36.10/32",
+    "54.76.254.148/32",
+  ]
+
   lb_target_group = {
     target_type    = "instance"
     container_name = "${terraform.workspace}-app"
