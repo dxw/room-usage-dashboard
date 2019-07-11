@@ -6,12 +6,21 @@ require 'google/apis/calendar_v3'
 require 'googleauth'
 require 'googleauth/stores/file_token_store'
 require 'fileutils'
+require 'yaml'
 
 OOB_URI = 'urn:ietf:wg:oauth:2.0:oob'.freeze
 TOKEN_PATH = 'token.yaml'.freeze
 SCOPE = Google::Apis::CalendarV3::AUTH_CALENDAR_READONLY
 
 def authorize
+  if !ENV['AUTH_TOKEN'].nil?
+    token_contents = {
+      'default' => ENV['AUTH_TOKEN']
+    }
+    token_file = File.open(TOKEN_PATH, "w")
+    token_file.puts token_contents.to_yaml
+    token_file.close
+  end
   client_id = Google::Auth::ClientId.new(ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'])
   token_store = Google::Auth::Stores::FileTokenStore.new(file: TOKEN_PATH)
   authorizer = Google::Auth::UserAuthorizer.new(client_id, SCOPE, token_store)
