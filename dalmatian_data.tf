@@ -69,10 +69,10 @@ data "aws_subnet" "extra_public" {
   }
 }
 
-data "aws_security_group" "ecs_security_group" {
+data "aws_security_group" "ecs_alb_security_group" {
   filter {
     name   = "tag:Name"
-    values = ["ecs-sg-dashboards-${var.environment}"]
+    values = ["alb-sg-dashboards-ecs-${var.environment}"]
   }
 }
 

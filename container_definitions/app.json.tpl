@@ -5,11 +5,7 @@
     "image": "${image}",
     "name": "${container_name}",
     "logConfiguration": {
-      "logDriver": "awslogs",
-      "options": {
-        "awslogs-group": "${log_group}",
-        "awslogs-region": "${log_region}"
-      }
+      "logDriver": "json-file"
     },
     "portMappings": [
       {

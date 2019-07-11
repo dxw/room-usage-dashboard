@@ -9,7 +9,7 @@ data "template_file" "app_container_definition" {
   vars {
     image          = "${var.account_id}.dkr.ecr.${var.region}.amazonaws.com/${terraform.workspace}-app"
     container_name = "${terraform.workspace}-app"
-    container_port = "3000"
+    container_port = "9292"
     log_group      = "${aws_cloudwatch_log_group.app_service_logs.name}"
     log_region     = "${var.region}"
     entrypoint     = "${jsonencode(list("/bin/bash","-c",join(" ",concat(local.ssm_parameters_command, local.app_container_entrypoint, local.app_container_command))))}"
@@ -61,6 +61,7 @@ module "app-service" {
   lb_subnetids = [
     "${element(data.aws_subnet.extra_public.*.id, 0)}",
     "${element(data.aws_subnet.extra_public.*.id, 1)}",
+    "${element(data.aws_subnet.extra_public.*.id, 2)}",
   ]
 
   lb_internal = false
@@ -75,10 +76,15 @@ module "app-service" {
 
   task_role_arn = "${aws_iam_role.app_task_role.arn}"
 
+  public_alb_whitelist = [
+    "37.157.36.10/32",
+    "54.76.254.148/32",
+  ]
+
   lb_target_group = {
     target_type    = "instance"
     container_name = "${terraform.workspace}-app"
-    container_port = "3000"
+    container_port = "9292"
   }
 
   lb_health_check = [{
@@ -97,5 +103,5 @@ module "app-service" {
     ssl_policy      = "ELBSecurityPolicy-TLS-1-2-2017-01"
   }
 
-  lb_security_group_ids = ["${data.aws_security_group.ecs_security_group.id}"]
+  lb_security_group_ids = ["${data.aws_security_group.ecs_alb_security_group.id}"]
 }
