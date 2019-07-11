@@ -61,6 +61,7 @@ module "app-service" {
   lb_subnetids = [
     "${element(data.aws_subnet.extra_public.*.id, 0)}",
     "${element(data.aws_subnet.extra_public.*.id, 1)}",
+    "${element(data.aws_subnet.extra_public.*.id, 2)}",
   ]
 
   lb_internal = false
