@@ -16,7 +16,7 @@ resource "aws_s3_bucket" "app_source" {
 data "template_file" "app_codepipeline_policy" {
   template = "${file("./policies/codepipeline_policy.json.tpl")}"
 
-  vars {
+  vars = {
     aws_s3_bucket_arn = "${aws_s3_bucket.app_source.arn}"
   }
 }
@@ -36,7 +36,7 @@ resource "aws_iam_role_policy" "app_codepipeline_policy" {
 data "template_file" "app_codebuild_policy" {
   template = "${file("./policies/codebuild_policy.json.tpl")}"
 
-  vars {
+  vars = {
     aws_s3_bucket_arn = "${aws_s3_bucket.app_source.arn}"
   }
 }
@@ -68,20 +68,21 @@ resource "aws_codebuild_project" "app_build" {
     type            = "LINUX_CONTAINER"
     privileged_mode = true
 
-    environment_variable = [
-      {
-        "name"  = "RAILS_ENV"
-        "value" = "${var.environment}"
-      },
-      {
-        "name"  = "AWS_ACCOUNT_ID"
-        "value" = "${local.account_id}"
-      },
-      {
-        "name"  = "IMAGE_REPO_NAME"
-        "value" = "${terraform.workspace}-app"
-      },
-    ]
+    environment_variable {
+      name  = "RAILS_ENV"
+      value = "${var.environment}"
+    }
+
+    environment_variable {
+      name  = "AWS_ACCOUNT_ID"
+      value = "${local.account_id}"
+    }
+
+    environment_variable {
+      name  = "IMAGE_REPO_NAME"
+      value = "${terraform.workspace}-app"
+    }
+
   }
 
   source {
@@ -111,7 +112,7 @@ resource "aws_codepipeline" "app_pipeline" {
       version          = "1"
       output_artifacts = ["source"]
 
-      configuration {
+      configuration = {
         Owner      = "${local.app_github_owner}"
         Repo       = "${local.app_github_repo}"
         Branch     = "${var.track_revision}"
@@ -132,7 +133,7 @@ resource "aws_codepipeline" "app_pipeline" {
       input_artifacts  = ["source"]
       output_artifacts = ["imagedefinitions"]
 
-      configuration {
+      configuration = {
         ProjectName = "app-${terraform.workspace}-codebuild"
       }
     }
@@ -149,7 +150,7 @@ resource "aws_codepipeline" "app_pipeline" {
       input_artifacts = ["imagedefinitions"]
       version         = "1"
 
-      configuration {
+      configuration = {
         ClusterName = "${var.cluster_name}"
         ServiceName = "${local.app_service_name}"
         FileName    = "imagedefinitions.json"
