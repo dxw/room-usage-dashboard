@@ -48,7 +48,7 @@ def service
 end
 
 
-# Fetch the next 2 events for this room
+# Fetch the next 5 events today for this room
 def fetch_events(calendar_id)
   response = service.list_events(calendar_id,
                                  max_results: 5,
