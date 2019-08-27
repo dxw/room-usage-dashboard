@@ -48,7 +48,7 @@ def service
 end
 
 
-# Fetch the next 2 events for this room
+# Fetch the next 5 events today for this room
 def fetch_events(calendar_id)
   response = service.list_events(calendar_id,
                                  max_results: 5,
@@ -57,7 +57,10 @@ def fetch_events(calendar_id)
                                  time_min: Time.now.iso8601,
                                  time_max: Date.today.+(1).to_time.iso8601)
 
-  response.items
+  # filter out any declined events – they normally represent a clash or room release
+  response.items.reject { |event|
+    event.attendees.find(&:self).response_status == 'declined'
+  }
 end
 
 get '/' do
