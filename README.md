@@ -9,6 +9,9 @@
      GOOGLE_CLIENT_ID=…
      GOOGLE_CLIENT_SECRET=…
      ```
+
+    If you change your credentials you'll need to remove the `token.yaml` file
+    to get the app to reauthorise
  - On the first run, the app needs to get permission to fetch the calendars as a
      user. The console will display a URL that you need to visit in your
      browser, after you authorise the request, you'll be given a token. Copy and
