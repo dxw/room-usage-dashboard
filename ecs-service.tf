@@ -79,6 +79,7 @@ module "app-service" {
   public_alb_whitelist = [
     "37.157.36.10/32",
     "54.76.254.148/32",
+    "34.251.110.141/32",
   ]
 
   lb_target_group = {
