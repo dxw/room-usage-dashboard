@@ -1,21 +1,21 @@
-#resource "aws_cloudwatch_log_group" "app_service_logs" {
-#  name              = "${terraform.workspace}-app"
-#  retention_in_days = 90
-#}
-#
-#data "template_file" "app_container_definition" {
-#  template = "${file("./container_definitions/app.json.tpl")}"
-#
-#  vars = {
-#    image          = "${var.account_id}.dkr.ecr.${var.region}.amazonaws.com/${terraform.workspace}-app"
-#    container_name = "${terraform.workspace}-app"
-#    container_port = "9292"
-#    log_group      = "${aws_cloudwatch_log_group.app_service_logs.name}"
-#    log_region     = "${var.region}"
-#    entrypoint     = "${jsonencode(list("/bin/bash", "-c", join(" ", concat(local.ssm_parameters_command, local.app_container_entrypoint, local.app_container_command))))}"
-#  }
-#}
-#
+resource "aws_cloudwatch_log_group" "app_service_logs" {
+  name              = "${terraform.workspace}-app"
+  retention_in_days = 90
+}
+
+data "template_file" "app_container_definition" {
+  template = "${file("./container_definitions/app.json.tpl")}"
+
+  vars = {
+    image          = "${var.account_id}.dkr.ecr.${var.region}.amazonaws.com/${terraform.workspace}-app"
+    container_name = "${terraform.workspace}-app"
+    container_port = "9292"
+    log_group      = "${aws_cloudwatch_log_group.app_service_logs.name}"
+    log_region     = "${var.region}"
+    entrypoint     = "${jsonencode(list("/bin/bash", "-c", join(" ", concat(local.ssm_parameters_command, local.app_container_entrypoint, local.app_container_command))))}"
+  }
+}
+
 #resource "aws_iam_role" "app_ecs_execution_role" {
 #  name               = "app_${terraform.workspace}_ecs_task_execution_role"
 #  assume_role_policy = "${file("./policies/ecs_task_execution_role.json.tpl")}"
