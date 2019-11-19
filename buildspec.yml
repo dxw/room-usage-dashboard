@@ -9,26 +9,25 @@ phases:
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
       - echo Building the Docker image...
       - chmod +x docker-entrypoint.sh
-      - docker build --build-arg RAILS_ENV=$RAILS_ENV -t $IMAGE_REPO_NAME:test .
+      - docker build --build-arg RAILS_ENV=$INFRA_ENV -t $CONTAINER_NAME:test .
   build:
     commands:
-      - IMAGE_TAG=commit-$CODEBUILD_RESOLVED_SOURCE_VERSION
-      - REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME
       - echo Testing the newly built Docker image...
       - docker run --name test -d -e RAILS_ENV=test --env-file=docker-compose.env.example $IMAGE_REPO_NAME:test /bin/bash -c "tail -f /dev/null"
       - docker exec test bundle install --with test --retry 3 --jobs 20
       - docker rm -f test
+  post_build:
+    commands:
+      - IMAGE_TAG=commit-$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_NAME
       - echo Tagging the successfully tested image as latest...
       - docker tag $IMAGE_REPO_NAME:test $REPOSITORY_URI:latest
       - docker tag $IMAGE_REPO_NAME:test $REPOSITORY_URI:$IMAGE_TAG
-  post_build:
-    commands:
-      - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - IMAGE_TAG=commit-$CODEBUILD_RESOLVED_SOURCE_VERSION
       - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - echo Build completed on `date`
       - echo Writing image definitions file...
-      - printf '[{"name":"%s","imageUri":"%s"}]' "dashboards-0-$RAILS_ENV-app" $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+      - printf '[{"name":"%s","imageUri":"%s"}]' $CONTAINER_NAME $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
 artifacts:
   files: imagedefinitions.json
