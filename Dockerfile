@@ -12,6 +12,8 @@ RUN bundle install --jobs 20
 
 COPY . $INSTALL_PATH
 
+COPY ./docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
 EXPOSE 9292
 
 CMD ["rackup", "--host", "0.0.0.0"]
