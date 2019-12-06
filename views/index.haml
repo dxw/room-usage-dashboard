@@ -15,12 +15,12 @@
               %li
                 .datetime= "#{event.start.date || event.start.date_time.strftime("%l:%M %P")} – #{event.end.date || event.end.date_time.strftime("%l:%M %P")}"
                 .title
-                  = event.summary || 'Unspecified'
+                  = event.summary || 'Private or unspecified'
                 %em.organiser
                   - if event.organizer
                     = "#{event.organizer.display_name || event.organizer.email}"
                   - else
-                    No organiser specified
+                    Private or unspecified
       .room.room__2
         %h2.dark-blue
           The Hide
@@ -30,12 +30,12 @@
               %li
                 .datetime= "#{event.start.date || event.start.date_time.strftime("%l:%M %P")} – #{event.end.date || event.end.date_time.strftime("%l:%M %P")}"
                 .title
-                  = event.summary || 'Unspecified'
+                  = event.summary || 'Private or unspecified'
                 %em.organiser
                   - if event.organizer
                     = "#{event.organizer.display_name || event.organizer.email}"
                   - else
-                    No organiser specified
+                    Private or unspecified
 
       .room.room__3
         %h2.turquoise Wellbeing Room
@@ -45,9 +45,9 @@
               %li
                 .datetime= "#{event.start.date || event.start.date_time.strftime("%l:%M %P")} – #{event.end.date || event.end.date_time.strftime("%l:%M %P")}"
                 .title
-                  = event.summary || 'Unspecified'
+                  = event.summary || 'Private or unspecified'
                 %em.organiser
                   - if event.organizer
                     = "#{event.organizer.display_name || event.organizer.email}"
                   - else
-                    No organiser specified
+                    Private or unspecified
