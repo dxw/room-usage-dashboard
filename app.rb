@@ -12,6 +12,9 @@ OOB_URI = 'urn:ietf:wg:oauth:2.0:oob'.freeze
 TOKEN_PATH = 'token.yaml'.freeze
 SCOPE = Google::Apis::CalendarV3::AUTH_CALENDAR_READONLY
 
+set :bind, '0.0.0.0'
+set :port, '9292'
+
 def authorize
   if !ENV['AUTH_TOKEN'].nil?
     token_contents = {
