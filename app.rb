@@ -12,6 +12,16 @@ OOB_URI = 'urn:ietf:wg:oauth:2.0:oob'.freeze
 TOKEN_PATH = 'token.yaml'.freeze
 SCOPE = Google::Apis::CalendarV3::AUTH_CALENDAR_READONLY
 
+ROOM_IDENTIFIERS = {
+  'hoxton_ground' => 'dxw.com_2d36303034323634352d353334@resource.calendar.google.com',
+  'hoxton_hide' => 'dxw.com_3936393930353336393539@resource.calendar.google.com',
+  'hoxton_wellbeing' => 'dxw.com_3437393236383531353437@resource.calendar.google.com',
+  'leeds_mustard' => 'dxw.com_18862haevrjfegh8jgp0540eipjn86gb74s3ac9n6spj6c9l6g@resource.calendar.google.com',
+  'leeds_peacock' => 'dxw.com_188326f7n3qtqiqjmqptmimskfsmu6g86cp38dhk68s34@resource.calendar.google.com',
+  'leeds_plum' => 'dxw.com_188al9agrcprmgaki2tcu1r5i0eim6gb64o30dpj6opj4d9g6s@resource.calendar.google.com',
+  'leeds_green' => 'dxw.com_1887p1bi29mkqi6sgnh07chkatufk6ga64o32chj70q32dhn@resource.calendar.google.com'
+}.freeze
+
 def authorize
   if !ENV['AUTH_TOKEN'].nil?
     token_contents = {
@@ -66,9 +76,9 @@ end
 
 get '/' do
   # Initialize the API
-  @the_hide_events = fetch_events('dxw.com_3936393930353336393539@resource.calendar.google.com')
-  @ground_floor_events = fetch_events('dxw.com_2d36303034323634352d353334@resource.calendar.google.com')
-  @wellbeing_room_events = fetch_events('dxw.com_3437393236383531353437@resource.calendar.google.com')
+  @the_hide_events = fetch_events(ROOM_IDENTIFIERS['hoxton_hide'])
+  @ground_floor_events = fetch_events(ROOM_IDENTIFIERS['hoxton_ground'])
+  @wellbeing_room_events = fetch_events(ROOM_IDENTIFIERS['hoxton_wellbeing'])
   @today = Date.today
 
   haml :index
@@ -76,10 +86,10 @@ end
 
 get '/leeds' do
   # Initialize the API
-  @col_mustard_events = fetch_events('dxw.com_18862haevrjfegh8jgp0540eipjn86gb74s3ac9n6spj6c9l6g@resource.calendar.google.com')
-  @dr_peacock_events = fetch_events('dxw.com_188326f7n3qtqiqjmqptmimskfsmu6g86cp38dhk68s34@resource.calendar.google.com')
-  @prof_plum_events = fetch_events('dxw.com_188al9agrcprmgaki2tcu1r5i0eim6gb64o30dpj6opj4d9g6s@resource.calendar.google.com')
-  @rev_green_events = fetch_events('dxw.com_1887p1bi29mkqi6sgnh07chkatufk6ga64o32chj70q32dhn@resource.calendar.google.com')
+  @col_mustard_events = fetch_events(ROOM_IDENTIFIERS['leeds_mustard'])
+  @dr_peacock_events = fetch_events(ROOM_IDENTIFIERS['leeds_peacock'])
+  @prof_plum_events = fetch_events(ROOM_IDENTIFIERS['leeds_plum'])
+  @rev_green_events = fetch_events(ROOM_IDENTIFIERS['leeds_green'])
   @today = Date.today
 
   haml :leeds
