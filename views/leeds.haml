@@ -1,0 +1,67 @@
+%html
+  %head
+    %link{:rel => 'stylesheet', :type => 'text/css', :href => '/stylesheets/styles.css'}
+    %meta{'http-equiv' => 'refresh', :content => '300'}
+
+  %body
+    %h1.light-blue
+      = "#{@today.strftime('%A, %B %e')}"
+    .calendar.leeds
+      .room.room-leeds__mustard
+        %h2 Col. Mustard
+        - if @col_mustard_events
+          %ul
+            - @col_mustard_events.each do |event|
+              %li
+                .datetime= "#{event.start.date || event.start.date_time.strftime("%l:%M %P")} – #{event.end.date || event.end.date_time.strftime("%l:%M %P")}"
+                .title
+                  = event.summary || 'Private or unspecified'
+                %em.organiser
+                  - if event.organizer
+                    = "#{event.organizer.display_name || event.organizer.email}"
+                  - else
+                    Private or unspecified
+      .room.room-leeds__peacock
+        %h2 Dr. Peacock
+        - if @dr_peacock_events
+          %ul
+            - @dr_peacock_events.each do |event|
+              %li
+                .datetime= "#{event.start.date || event.start.date_time.strftime("%l:%M %P")} – #{event.end.date || event.end.date_time.strftime("%l:%M %P")}"
+                .title
+                  = event.summary || 'Private or unspecified'
+                %em.organiser
+                  - if event.organizer
+                    = "#{event.organizer.display_name || event.organizer.email}"
+                  - else
+                    Private or unspecified
+
+      .room.room-leeds__plum
+        %h2 Prof. Plum
+        - if @prof_plum_events
+          %ul
+            - @prof_plum_events.each do |event|
+              %li
+                .datetime= "#{event.start.date || event.start.date_time.strftime("%l:%M %P")} – #{event.end.date || event.end.date_time.strftime("%l:%M %P")}"
+                .title
+                  = event.summary || 'Private or unspecified'
+                %em.organiser
+                  - if event.organizer
+                    = "#{event.organizer.display_name || event.organizer.email}"
+                  - else
+                    Private or unspecified
+
+      .room.room-leeds__green
+        %h2 Revd. Green
+        - if @rev_green_events
+          %ul
+            - @rev_green_events.each do |event|
+              %li
+                .datetime= "#{event.start.date || event.start.date_time.strftime("%l:%M %P")} – #{event.end.date || event.end.date_time.strftime("%l:%M %P")}"
+                .title
+                  = event.summary || 'Private or unspecified'
+                %em.organiser
+                  - if event.organizer
+                    = "#{event.organizer.display_name || event.organizer.email}"
+                  - else
+                    Private or unspecified

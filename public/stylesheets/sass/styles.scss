@@ -23,6 +23,11 @@ $room1: $brand-secondary;
 $room2: $brand-primary;
 $room3: $dxw-turquoise;
 
+$leeds-mustard: #cf9a0a;
+$leeds-peacock: $brand-primary;
+$leeds-plum: #7c12a6;
+$leeds-green: #2b6e10;
+
 * {
   box-sizing: border-box;
 }
@@ -44,7 +49,23 @@ h1 {
 
 .calendar {
   display: grid;
-  grid-template-columns: repeat(3, 1fr)
+  grid-template-columns: repeat(3, 1fr);
+
+  &.leeds {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@mixin room-colours($base-colour) {
+  h2 {
+    color: $base-colour;
+  }
+  ul li {
+    background-color: $base-colour;
+    &:nth-child(odd) {
+      background-color: darken($base-colour, 4);
+    }
+  }
 }
 
 .room {
@@ -62,47 +83,31 @@ h1 {
   }
 
   &.room__1 {
-    h2 {
-      color: $room1;
-    }
-    ul li {
-      background-color: $room1;
-      &:nth-child(odd) {
-        background-color: darken($room1, 4);
-      }
-    }
+    @include room-colours($room1);
   }
 
   &.room__2 {
-    h2 {
-      color: $room2;
-    }
-    ul li {
-      background-color: $room2;
-      &:nth-child(odd) {
-        background-color: darken($room2, 4);
-      }
-
-      .title {
-        border-left: 1px solid rgba(255,255,255,0.7);
-      }
-    }
+    @include room-colours($room2);
   }
 
   &.room__3 {
-    h2 {
-      color: $room3;
-    }
-    ul li {
-      background-color: $room3;
-      &:nth-child(odd) {
-        background-color: darken($room3, 4);
-      }
+    @include room-colours($room3);
+  }
 
-      .title {
-        border-left: 1px solid rgba(255,255,255,0.7);
-      }
-    }
+  &.room-leeds__mustard {
+    @include room-colours($leeds-mustard);
+  }
+
+  &.room-leeds__peacock {
+    @include room-colours($leeds-peacock);
+  }
+
+  &.room-leeds__plum {
+    @include room-colours($leeds-plum);
+  }
+
+  &.room-leeds__green {
+    @include room-colours($leeds-green);
   }
 
   ul {
@@ -149,5 +154,3 @@ h1 {
     padding-left: 13px;
   }
 }
-
-

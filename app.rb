@@ -74,6 +74,17 @@ get '/' do
   haml :index
 end
 
+get '/leeds' do
+  # Initialize the API
+  @col_mustard_events = fetch_events('dxw.com_18862haevrjfegh8jgp0540eipjn86gb74s3ac9n6spj6c9l6g@resource.calendar.google.com')
+  @dr_peacock_events = fetch_events('dxw.com_188326f7n3qtqiqjmqptmimskfsmu6g86cp38dhk68s34@resource.calendar.google.com')
+  @prof_plum_events = fetch_events('dxw.com_188al9agrcprmgaki2tcu1r5i0eim6gb64o30dpj6opj4d9g6s@resource.calendar.google.com')
+  @rev_green_events = fetch_events('dxw.com_1887p1bi29mkqi6sgnh07chkatufk6ga64o32chj70q32dhn@resource.calendar.google.com')
+  @today = Date.today
+
+  haml :leeds
+end
+
 get '/check' do
   'Im alive!'
 end
