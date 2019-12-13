@@ -49,7 +49,10 @@ h1 {
 
 .calendar {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+
+  &.hoxton {
+    grid-template-columns: repeat(3, 1fr);
+  }
 
   &.leeds {
     grid-template-columns: repeat(4, 1fr);
