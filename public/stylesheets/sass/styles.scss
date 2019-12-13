@@ -87,35 +87,11 @@ h1 {
   }
 
   &.room__2 {
-    h2 {
-      color: $room2;
-    }
-    ul li {
-      background-color: $room2;
-      &:nth-child(odd) {
-        background-color: darken($room2, 4);
-      }
-
-      .title {
-        border-left: 1px solid rgba(255,255,255,0.7);
-      }
-    }
+    @include room-colours($room2);
   }
 
   &.room__3 {
-    h2 {
-      color: $room3;
-    }
-    ul li {
-      background-color: $room3;
-      &:nth-child(odd) {
-        background-color: darken($room3, 4);
-      }
-
-      .title {
-        border-left: 1px solid rgba(255,255,255,0.7);
-      }
-    }
+    @include room-colours($room3);
   }
 
   &.room-leeds__mustard {
