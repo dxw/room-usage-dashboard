@@ -15,8 +15,14 @@ configuring boards.
 
 ### Boards
 
-`BOARDS` is a hash of arrays, each array being of room objects you want to know
-about (displayed left to right on the board).
+`BOARDS` is a hash of hashes, each hash defining the behaviour of that
+particular dashboard.
+
+* `:name` is a the title of the board. It's only displayed as the page title,
+  not on the board itself.
+* `:rooms` is an array of room objects you want to know about (displayed left to
+  right on the board).
+* `:show_clock` toggles the clock in the top right hand corner of the board.
 
 New boards become accessible automatically at `/boards/{name}`.
 
