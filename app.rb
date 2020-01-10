@@ -127,7 +127,8 @@ BOARDS = {
       ROOMS[:leeds_peacock],
       ROOMS[:leeds_plum],
       ROOMS[:leeds_green],
-    ]
+    ],
+    show_clock: true
   },
 }.freeze
 
@@ -142,6 +143,7 @@ end
 get '/board/:slug' do
   board = BOARDS[params['slug'].to_sym]
   @board_name = board[:name]
+  @show_clock = board[:show_clock]
   @rooms = board[:rooms]
   @today = Date.today
   haml :multi_room

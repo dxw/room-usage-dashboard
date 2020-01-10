@@ -47,6 +47,12 @@ h1 {
   color: $black;
 }
 
+h1 #datetime_time {
+  display: inline-block;
+  float: right;
+  padding-right: 40px;
+}
+
 .calendar {
   display: grid;
 }

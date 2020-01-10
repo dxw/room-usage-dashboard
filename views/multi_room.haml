@@ -5,8 +5,10 @@
     %meta{'http-equiv' => 'refresh', :content => '300'}
 
   %body
-    %h1.light-blue
-      = "#{@today.strftime('%A, %B %e')}"
+    %h1
+      %span#datetime_date #{@today.strftime('%A, %B %e')}
+      -if @show_clock
+        %span#datetime_time
     .calendar{"style" => "grid-template-columns: repeat(#{@rooms.count}, 1fr)"}
       - @rooms.each do |room|
         .room{:class => room.css_class}
@@ -24,3 +26,16 @@
                       = "#{event.organizer.display_name || event.organizer.email}"
                     - else
                       Private or unspecified
+
+- if @show_clock
+  :javascript
+    function updateClock()
+    {
+        var now = new Date();
+
+        document.getElementById("datetime_date").innerHTML = now.toLocaleString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+        document.getElementById("datetime_time").innerHTML = now.toLocaleString('en-GB', { hour: 'numeric', minute: 'numeric', hour12: true });
+    }
+
+    updateClock();
+    setInterval(updateClock, 10000);
