@@ -15,30 +15,37 @@ SCOPE = Google::Apis::CalendarV3::AUTH_CALENDAR_READONLY
 ROOMS = {
   'hoxton_ground' => {
     'name' => 'Main Meeting Room',
+    'class' => 'room__1',
     'identifier' => 'dxw.com_2d36303034323634352d353334@resource.calendar.google.com'
   },
   'hoxton_hide' => {
     'name' => 'The Hide',
+    'class' => 'room__2',
     'identifier' => 'dxw.com_3936393930353336393539@resource.calendar.google.com'
   },
   'hoxton_wellbeing' => {
     'name' => 'Wellbeing Room',
+    'class' => 'room__3',
     'identifier' => 'dxw.com_3437393236383531353437@resource.calendar.google.com'
   },
   'leeds_mustard' => {
     'name' => 'Col. Mustard',
+    'class' => 'room-leeds__mustard',
     'identifier' => 'dxw.com_18862haevrjfegh8jgp0540eipjn86gb74s3ac9n6spj6c9l6g@resource.calendar.google.com'
   },
   'leeds_peacock' => {
     'name' => 'Dr. Peacock',
+    'class' => 'room-leeds__peacock',
     'identifier' => 'dxw.com_188326f7n3qtqiqjmqptmimskfsmu6g86cp38dhk68s34@resource.calendar.google.com'
   },
   'leeds_plum' => {
     'name' => 'Prof. Plum',
+    'class' => 'room-leeds__plum',
     'identifier' => 'dxw.com_188al9agrcprmgaki2tcu1r5i0eim6gb64o30dpj6opj4d9g6s@resource.calendar.google.com'
   },
   'leeds_green' => {
     'name' => 'Revd. Green',
+    'class' => 'room-leeds__green',
     'identifier' => 'dxw.com_1887p1bi29mkqi6sgnh07chkatufk6ga64o32chj70q32dhn@resource.calendar.google.com'
   }
 }.freeze
@@ -95,25 +102,35 @@ def fetch_events(calendar_id)
   }
 end
 
+def fetch_room(room_id)
+  {
+    'name' => ROOMS[room_id]['name'],
+    'class' => ROOMS[room_id]['class'],
+    'events' => fetch_events(ROOMS[room_id]['identifier'])
+  }
+end
+
 get '/' do
-  # Initialize the API
-  @the_hide_events = fetch_events(ROOMS['hoxton_hide']['identifier'])
-  @ground_floor_events = fetch_events(ROOMS['hoxton_ground']['identifier'])
-  @wellbeing_room_events = fetch_events(ROOMS['hoxton_wellbeing']['identifier'])
+  @rooms = [
+    fetch_room('hoxton_hide'),
+    fetch_room('hoxton_ground'),
+    fetch_room('hoxton_wellbeing'),
+  ]
   @today = Date.today
 
-  haml :index
+  haml :multi_room
 end
 
 get '/leeds' do
-  # Initialize the API
-  @col_mustard_events = fetch_events(ROOMS['leeds_mustard']['identifier'])
-  @dr_peacock_events = fetch_events(ROOMS['leeds_peacock']['identifier'])
-  @prof_plum_events = fetch_events(ROOMS['leeds_plum']['identifier'])
-  @rev_green_events = fetch_events(ROOMS['leeds_green']['identifier'])
+  @rooms = [
+    fetch_room('leeds_mustard'),
+    fetch_room('leeds_peacock'),
+    fetch_room('leeds_plum'),
+    fetch_room('leeds_green'),
+  ]
   @today = Date.today
 
-  haml :leeds
+  haml :multi_room
 end
 
 get '/check' do
