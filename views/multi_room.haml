@@ -8,12 +8,12 @@
       = "#{@today.strftime('%A, %B %e')}"
     .calendar{"style" => "grid-template-columns: repeat(#{@rooms.count}, 1fr)"}
       - @rooms.each do |room|
-        .room{:class => room['class']}
+        .room{:class => room.css_class}
           %h2
-            = room['name']
-          - if room['events']
+            = room.name
+          - if room.events
             %ul
-              - room['events'].each do |event|
+              - room.events.each do |event|
                 %li
                   .datetime= "#{event.start.date || event.start.date_time.strftime("%l:%M %P")} – #{event.end.date || event.end.date_time.strftime("%l:%M %P")}"
                   .title
