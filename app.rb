@@ -65,11 +65,15 @@ def fetch_events(calendar_id)
 end
 
 class Room
-  attr_reader :name, :css_class, :events
+  attr_reader :name, :css_class
   def initialize(name:, css_class:, gcal_identifier:)
     @name = name
     @css_class = css_class
-    @events = fetch_events(gcal_identifier)
+    @gcal_identifier = gcal_identifier
+  end
+
+  def events
+    fetch_events(@gcal_identifier)
   end
 end
 
