@@ -50,6 +50,20 @@ ROOMS = {
   }
 }.freeze
 
+BOARDS = {
+  'hoxton' => [
+    'hoxton_ground',
+    'hoxton_hide',
+    'hoxton_wellbeing',
+  ],
+  'leeds' => [
+    'leeds_mustard',
+    'leeds_peacock',
+    'leeds_plum',
+    'leeds_green',
+  ],
+}.freeze
+
 def authorize
   if !ENV['AUTH_TOKEN'].nil?
     token_contents = {
@@ -110,27 +124,18 @@ def fetch_room(room_id)
   }
 end
 
-get '/' do
-  @rooms = [
-    fetch_room('hoxton_hide'),
-    fetch_room('hoxton_ground'),
-    fetch_room('hoxton_wellbeing'),
-  ]
+def fetch_board(board_id)
+  @rooms = BOARDS[board_id].map { |room| fetch_room(room) }
   @today = Date.today
-
   haml :multi_room
 end
 
-get '/leeds' do
-  @rooms = [
-    fetch_room('leeds_mustard'),
-    fetch_room('leeds_peacock'),
-    fetch_room('leeds_plum'),
-    fetch_room('leeds_green'),
-  ]
-  @today = Date.today
+get '/' do
+  fetch_board('hoxton')
+end
 
-  haml :multi_room
+get '/leeds' do
+  fetch_board('leeds')
 end
 
 get '/check' do
