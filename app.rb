@@ -112,17 +112,23 @@ ROOMS = {
 }.freeze
 
 BOARDS = {
-  hoxton: [
-    ROOMS[:hoxton_ground],
-    ROOMS[:hoxton_hide],
-    ROOMS[:hoxton_wellbeing],
-  ],
-  leeds: [
-    ROOMS[:leeds_mustard],
-    ROOMS[:leeds_peacock],
-    ROOMS[:leeds_plum],
-    ROOMS[:leeds_green],
-  ],
+  hoxton: {
+    name: 'Hoxton Office',
+    rooms: [
+      ROOMS[:hoxton_ground],
+      ROOMS[:hoxton_hide],
+      ROOMS[:hoxton_wellbeing],
+    ]
+  },
+  leeds: {
+    name: 'Leeds Office',
+    rooms: [
+      ROOMS[:leeds_mustard],
+      ROOMS[:leeds_peacock],
+      ROOMS[:leeds_plum],
+      ROOMS[:leeds_green],
+    ]
+  },
 }.freeze
 
 get '/' do
@@ -134,7 +140,9 @@ get '/leeds' do
 end
 
 get '/board/:slug' do
-  @rooms = BOARDS[params['slug'].to_sym]
+  board = BOARDS[params['slug'].to_sym]
+  @board_name = board[:name]
+  @rooms = board[:rooms]
   @today = Date.today
   haml :multi_room
 end
