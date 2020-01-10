@@ -15,8 +15,8 @@ configuring boards.
 
 ### Boards
 
-`BOARDS` is a hash of arrays, each array representing a collection of
-rooms which you want to know about (in order left to right).
+`BOARDS` is a hash of arrays, each array being of room objects you want to know
+about (displayed left to right on the board).
 
 New boards become accessible automatically at `/boards/{name}`.
 

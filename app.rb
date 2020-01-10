@@ -74,37 +74,37 @@ class Room
 end
 
 ROOMS = {
-  'hoxton_ground' => Room.new(
+  hoxton_ground: Room.new(
     name: 'Main Meeting Room',
     css_class: 'room__1',
     gcal_identifier: 'dxw.com_2d36303034323634352d353334@resource.calendar.google.com'
   ),
-  'hoxton_hide' => Room.new(
+  hoxton_hide: Room.new(
     name: 'The Hide',
     css_class: 'room__2',
     gcal_identifier: 'dxw.com_3936393930353336393539@resource.calendar.google.com'
   ),
-  'hoxton_wellbeing' => Room.new(
+  hoxton_wellbeing: Room.new(
     name: 'Wellbeing Room',
     css_class: 'room__3',
     gcal_identifier: 'dxw.com_3437393236383531353437@resource.calendar.google.com'
   ),
-  'leeds_mustard' => Room.new(
+  leeds_mustard: Room.new(
     name: 'Col. Mustard',
     css_class: 'room-leeds__mustard',
     gcal_identifier: 'dxw.com_18862haevrjfegh8jgp0540eipjn86gb74s3ac9n6spj6c9l6g@resource.calendar.google.com'
   ),
-  'leeds_peacock' => Room.new(
+  leeds_peacock: Room.new(
     name: 'Dr. Peacock',
     css_class: 'room-leeds__peacock',
     gcal_identifier: 'dxw.com_188326f7n3qtqiqjmqptmimskfsmu6g86cp38dhk68s34@resource.calendar.google.com'
   ),
-  'leeds_plum' => Room.new(
+  leeds_plum: Room.new(
     name: 'Prof. Plum',
     css_class: 'room-leeds__plum',
     gcal_identifier: 'dxw.com_188al9agrcprmgaki2tcu1r5i0eim6gb64o30dpj6opj4d9g6s@resource.calendar.google.com'
   ),
-  'leeds_green' => Room.new(
+  leeds_green: Room.new(
     name: 'Revd. Green',
     css_class: 'room-leeds__green',
     gcal_identifier: 'dxw.com_1887p1bi29mkqi6sgnh07chkatufk6ga64o32chj70q32dhn@resource.calendar.google.com'
@@ -112,16 +112,16 @@ ROOMS = {
 }.freeze
 
 BOARDS = {
-  'hoxton' => [
-    'hoxton_ground',
-    'hoxton_hide',
-    'hoxton_wellbeing',
+  hoxton: [
+    ROOMS[:hoxton_ground],
+    ROOMS[:hoxton_hide],
+    ROOMS[:hoxton_wellbeing],
   ],
-  'leeds' => [
-    'leeds_mustard',
-    'leeds_peacock',
-    'leeds_plum',
-    'leeds_green',
+  leeds: [
+    ROOMS[:leeds_mustard],
+    ROOMS[:leeds_peacock],
+    ROOMS[:leeds_plum],
+    ROOMS[:leeds_green],
   ],
 }.freeze
 
@@ -134,7 +134,7 @@ get '/leeds' do
 end
 
 get '/board/:slug' do
-  @rooms = BOARDS[params['slug']].map { |room| ROOMS[room] }
+  @rooms = BOARDS[params['slug'].to_sym]
   @today = Date.today
   haml :multi_room
 end
