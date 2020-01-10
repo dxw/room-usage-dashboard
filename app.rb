@@ -69,7 +69,16 @@ class Room
   def initialize(name:, css_class:, gcal_identifier:)
     @name = name
     @css_class = css_class
-    @events = fetch_events(gcal_identifier)
+    @gcal_identifier = gcal_identifier
+  end
+
+  def events
+    calendar_events = fetch_events(@gcal_identifier)
+
+    {
+      now: calendar_events.select{ |event| DateTime.now.between?(event.start.date_time, event.end.date_time)},
+      later: calendar_events.select{ |event| event.start.date_time >= DateTime.now},
+    }
   end
 end
 
