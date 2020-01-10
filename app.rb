@@ -131,11 +131,15 @@ def fetch_board(board_id)
 end
 
 get '/' do
-  fetch_board('hoxton')
+  redirect('/board/hoxton')
 end
 
 get '/leeds' do
-  fetch_board('leeds')
+  redirect('/board/leeds')
+end
+
+get '/board/:slug' do
+  fetch_board(params['slug'])
 end
 
 get '/check' do
