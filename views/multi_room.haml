@@ -1,19 +1,41 @@
 %html
   %head
+    %title #{@board_name} - Room Dashboards - dxw
     %link{:rel => 'stylesheet', :type => 'text/css', :href => '/stylesheets/styles.css'}
     %meta{'http-equiv' => 'refresh', :content => '300'}
 
   %body
-    %h1.light-blue
-      = "#{@today.strftime('%A, %B %e')}"
+    %h1
+      %span#datetime_date #{@today.strftime('%A, %B %e')}
+      -if @show_clock
+        %span#datetime_time
     .calendar{"style" => "grid-template-columns: repeat(#{@rooms.count}, 1fr)"}
       - @rooms.each do |room|
         .room{:class => room.css_class}
-          %h2
-            = room.name
-          - if room.events
+          %h2= room.name
+          %ul.events-now
+            - if room.events[:now].empty?
+              %li.empty-now
+                .datetime
+                .title Empty
+            - else
+              - room.events[:now].each do |event|
+                %li.busy-now
+                  .datetime= "Until<br>#{event.end.date || event.end.date_time.strftime("%l:%M %P")}"
+                  .title
+                    = event.summary || 'Private or unspecified'
+                  %em.organiser
+                    - if event.organizer
+                      = "#{event.organizer.display_name || event.organizer.email}"
+                    - else
+                      Private or unspecified
+
+    .calendar{"style" => "grid-template-columns: repeat(#{@rooms.count}, 1fr)"}
+      - @rooms.each do |room|
+        .room{:class => room.css_class}
+          - if not room.events[:later].empty?
             %ul
-              - room.events.each do |event|
+              - room.events[:later].each do |event|
                 %li
                   .datetime= "#{event.start.date || event.start.date_time.strftime("%l:%M %P")} – #{event.end.date || event.end.date_time.strftime("%l:%M %P")}"
                   .title
@@ -23,3 +45,16 @@
                       = "#{event.organizer.display_name || event.organizer.email}"
                     - else
                       Private or unspecified
+
+- if @show_clock
+  :javascript
+    function updateClock()
+    {
+        var now = new Date();
+
+        document.getElementById("datetime_date").innerHTML = now.toLocaleString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+        document.getElementById("datetime_time").innerHTML = now.toLocaleString('en-GB', { hour: 'numeric', minute: 'numeric', hour12: true });
+    }
+
+    updateClock();
+    setInterval(updateClock, 10000);

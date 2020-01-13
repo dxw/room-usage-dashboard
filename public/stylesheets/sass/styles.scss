@@ -47,6 +47,12 @@ h1 {
   color: $black;
 }
 
+h1 #datetime_time {
+  display: inline-block;
+  float: right;
+  padding-right: 40px;
+}
+
 .calendar {
   display: grid;
 }
@@ -55,10 +61,36 @@ h1 {
   h2 {
     color: $base-colour;
   }
-  ul li {
-    background-color: $base-colour;
-    &:nth-child(odd) {
-      background-color: darken($base-colour, 4);
+
+  ul {
+
+    border-top: 6px solid darken($base-colour, 10);
+
+    &.events-now {
+
+      border-top-width: 12px;
+
+      li {
+
+        &.busy-now {
+          background-color: darken($base-colour, 4);
+        }
+
+        &.empty-now {
+          background: mix(white, $base-colour, 60%);
+        }
+      }
+    }
+
+    li {
+      $desaturated-base: mix(white, $base-colour, 20%);
+      background-color: $desaturated-base;
+      &:nth-child(1) {
+        background-color: $base-colour;
+      }
+      &:nth-child(even) {
+        background-color: darken($desaturated-base, 4);
+      }
     }
   }
 }
@@ -75,6 +107,7 @@ h1 {
     font-size: 32px;
     padding-left: 40px;
     margin: 0;
+    margin-bottom: .3em;
   }
 
   &.room__1 {
@@ -107,19 +140,21 @@ h1 {
 
   ul {
     padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
     list-style-type: none;
     display: grid;
     grid-template-rows: 1fr;
+
+    &.events-now {
+      height: 100%;
+    }
 
     li {
       padding: 30px;
       display: grid;
       grid-gap: 20px 5px;
       grid-template-columns: 130px auto;
-
-      &:nth-child(odd) {
-        background-color: red;
-      }
 
       .title {
         border-left: 1px solid rgba(255,255,255,0.7);
@@ -144,7 +179,6 @@ h1 {
     font-style: normal;
     font-size: 0.8em;
     margin-top: 5px;
-    opacity: 0.7;
     grid-column-start: 2;
     padding-left: 13px;
   }
