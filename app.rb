@@ -12,6 +12,7 @@ OOB_URI = 'urn:ietf:wg:oauth:2.0:oob'.freeze
 TOKEN_PATH = 'token.yaml'.freeze
 SCOPE = Google::Apis::CalendarV3::AUTH_CALENDAR_READONLY
 
+CACHE_EXPIRY_TIMEOUT = 60  # How long a room events API hit should cache, in seconds
 
 def authorize
   if !ENV['AUTH_TOKEN'].nil?
@@ -65,11 +66,20 @@ def fetch_events(calendar_id)
 end
 
 class Room
-  attr_reader :name, :css_class, :events
+  attr_reader :name, :css_class
   def initialize(name:, css_class:, gcal_identifier:)
     @name = name
     @css_class = css_class
-    @events = fetch_events(gcal_identifier)
+    @gcal_identifier = gcal_identifier
+    @events_cache_expires = Time.now
+  end
+
+  def events
+    if (@events_cache_expires < Time.now)
+      @cached_events = fetch_events(@gcal_identifier)
+      @events_cache_expires = Time.now + CACHE_EXPIRY_TIMEOUT
+    end
+    @cached_events
   end
 end
 
