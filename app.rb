@@ -15,6 +15,9 @@ SCOPE = Google::Apis::CalendarV3::AUTH_CALENDAR_READONLY
 set :bind, '0.0.0.0'
 set :port, '9292'
 
+CACHE_EXPIRY_TIMEOUT = 60  # How long a room events API hit should cache, in seconds
+
+
 def authorize
   if !ENV['AUTH_TOKEN'].nil?
     token_contents = {
@@ -50,7 +53,6 @@ def service
                 end
 end
 
-
 # Fetch the next 5 events today for this room
 def fetch_events(calendar_id)
   response = service.list_events(calendar_id,
@@ -67,14 +69,102 @@ def fetch_events(calendar_id)
   }
 end
 
-get '/' do
-  # Initialize the API
-  @the_hide_events = fetch_events('dxw.com_3936393930353336393539@resource.calendar.google.com')
-  @ground_floor_events = fetch_events('dxw.com_2d36303034323634352d353334@resource.calendar.google.com')
-  @wellbeing_room_events = fetch_events('dxw.com_3437393236383531353437@resource.calendar.google.com')
-  @today = Date.today
+class Room
+  attr_reader :name, :css_class
+  def initialize(name:, css_class:, gcal_identifier:)
+    @name = name
+    @css_class = css_class
+    @gcal_identifier = gcal_identifier
+    @events_cache_expires = Time.now
+  end
 
-  haml :index
+  def events
+    if (@events_cache_expires < Time.now)
+      @cached_events = fetch_events(@gcal_identifier)
+      @events_cache_expires = Time.now + CACHE_EXPIRY_TIMEOUT
+    end
+
+    {
+      now: @cached_events.select{ |event| DateTime.now.between?(event.start.date_time, event.end.date_time)},
+      later: @cached_events.select{ |event| event.start.date_time >= DateTime.now},
+    }
+  end
+end
+
+ROOMS = {
+  hoxton_ground: Room.new(
+    name: 'Main Meeting Room',
+    css_class: 'room__1',
+    gcal_identifier: 'dxw.com_2d36303034323634352d353334@resource.calendar.google.com'
+  ),
+  hoxton_hide: Room.new(
+    name: 'The Hide',
+    css_class: 'room__2',
+    gcal_identifier: 'dxw.com_3936393930353336393539@resource.calendar.google.com'
+  ),
+  hoxton_wellbeing: Room.new(
+    name: 'Wellbeing Room',
+    css_class: 'room__3',
+    gcal_identifier: 'dxw.com_3437393236383531353437@resource.calendar.google.com'
+  ),
+  leeds_mustard: Room.new(
+    name: 'Col. Mustard',
+    css_class: 'room-leeds__mustard',
+    gcal_identifier: 'dxw.com_18862haevrjfegh8jgp0540eipjn86gb74s3ac9n6spj6c9l6g@resource.calendar.google.com'
+  ),
+  leeds_peacock: Room.new(
+    name: 'Dr. Peacock',
+    css_class: 'room-leeds__peacock',
+    gcal_identifier: 'dxw.com_188326f7n3qtqiqjmqptmimskfsmu6g86cp38dhk68s34@resource.calendar.google.com'
+  ),
+  leeds_plum: Room.new(
+    name: 'Prof. Plum',
+    css_class: 'room-leeds__plum',
+    gcal_identifier: 'dxw.com_188al9agrcprmgaki2tcu1r5i0eim6gb64o30dpj6opj4d9g6s@resource.calendar.google.com'
+  ),
+  leeds_green: Room.new(
+    name: 'Revd. Green',
+    css_class: 'room-leeds__green',
+    gcal_identifier: 'dxw.com_1887p1bi29mkqi6sgnh07chkatufk6ga64o32chj70q32dhn@resource.calendar.google.com'
+  ),
+}.freeze
+
+BOARDS = {
+  hoxton: {
+    name: 'Hoxton Office',
+    rooms: [
+      ROOMS[:hoxton_ground],
+      ROOMS[:hoxton_hide],
+      ROOMS[:hoxton_wellbeing],
+    ]
+  },
+  leeds: {
+    name: 'Leeds Office',
+    rooms: [
+      ROOMS[:leeds_mustard],
+      ROOMS[:leeds_peacock],
+      ROOMS[:leeds_plum],
+      ROOMS[:leeds_green],
+    ],
+    show_clock: true
+  },
+}.freeze
+
+get '/' do
+  redirect('/board/hoxton')
+end
+
+get '/leeds' do
+  redirect('/board/leeds')
+end
+
+get '/board/:slug' do
+  board = BOARDS[params['slug'].to_sym]
+  @board_name = board[:name]
+  @show_clock = board[:show_clock]
+  @rooms = board[:rooms]
+  @today = Date.today
+  haml :multi_room
 end
 
 get '/check' do

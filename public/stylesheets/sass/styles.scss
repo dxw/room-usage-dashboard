@@ -23,6 +23,11 @@ $room1: $brand-secondary;
 $room2: $brand-primary;
 $room3: $dxw-turquoise;
 
+$leeds-mustard: #cf9a0a;
+$leeds-peacock: $brand-primary;
+$leeds-plum: #7c12a6;
+$leeds-green: #2b6e10;
+
 * {
   box-sizing: border-box;
 }
@@ -42,9 +47,52 @@ h1 {
   color: $black;
 }
 
+h1 #datetime_time {
+  display: inline-block;
+  float: right;
+  padding-right: 40px;
+}
+
 .calendar {
   display: grid;
-  grid-template-columns: repeat(3, 1fr)
+}
+
+@mixin room-colours($base-colour) {
+  h2 {
+    color: $base-colour;
+  }
+
+  ul {
+
+    border-top: 6px solid darken($base-colour, 10);
+
+    &.events-now {
+
+      border-top-width: 12px;
+
+      li {
+
+        &.busy-now {
+          background-color: darken($base-colour, 4);
+        }
+
+        &.empty-now {
+          background: mix(white, $base-colour, 60%);
+        }
+      }
+    }
+
+    li {
+      $desaturated-base: mix(white, $base-colour, 20%);
+      background-color: $desaturated-base;
+      &:nth-child(1) {
+        background-color: $base-colour;
+      }
+      &:nth-child(even) {
+        background-color: darken($desaturated-base, 4);
+      }
+    }
+  }
 }
 
 .room {
@@ -59,67 +107,54 @@ h1 {
     font-size: 32px;
     padding-left: 40px;
     margin: 0;
+    margin-bottom: .3em;
   }
 
   &.room__1 {
-    h2 {
-      color: $room1;
-    }
-    ul li {
-      background-color: $room1;
-      &:nth-child(odd) {
-        background-color: darken($room1, 4);
-      }
-    }
+    @include room-colours($room1);
   }
 
   &.room__2 {
-    h2 {
-      color: $room2;
-    }
-    ul li {
-      background-color: $room2;
-      &:nth-child(odd) {
-        background-color: darken($room2, 4);
-      }
-
-      .title {
-        border-left: 1px solid rgba(255,255,255,0.7);
-      }
-    }
+    @include room-colours($room2);
   }
 
   &.room__3 {
-    h2 {
-      color: $room3;
-    }
-    ul li {
-      background-color: $room3;
-      &:nth-child(odd) {
-        background-color: darken($room3, 4);
-      }
+    @include room-colours($room3);
+  }
 
-      .title {
-        border-left: 1px solid rgba(255,255,255,0.7);
-      }
-    }
+  &.room-leeds__mustard {
+    @include room-colours($leeds-mustard);
+  }
+
+  &.room-leeds__peacock {
+    @include room-colours($leeds-peacock);
+  }
+
+  &.room-leeds__plum {
+    @include room-colours($leeds-plum);
+  }
+
+  &.room-leeds__green {
+    @include room-colours($leeds-green);
   }
 
   ul {
     padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
     list-style-type: none;
     display: grid;
     grid-template-rows: 1fr;
+
+    &.events-now {
+      height: 100%;
+    }
 
     li {
       padding: 30px;
       display: grid;
       grid-gap: 20px 5px;
       grid-template-columns: 130px auto;
-
-      &:nth-child(odd) {
-        background-color: red;
-      }
 
       .title {
         border-left: 1px solid rgba(255,255,255,0.7);
@@ -144,10 +179,7 @@ h1 {
     font-style: normal;
     font-size: 0.8em;
     margin-top: 5px;
-    opacity: 0.7;
     grid-column-start: 2;
     padding-left: 13px;
   }
 }
-
-
