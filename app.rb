@@ -78,16 +78,34 @@ class Room
     @events_cache_expires = Time.now
   end
 
+  def empty
+    events.select{ |event| event[:now] }.empty?
+  end
+
+  def empty_until_string
+    if empty and not events.empty?
+      events[0][:start_time_string]
+    else
+      "Tomorrow"
+    end
+  end
+
   def events
     if (@events_cache_expires < Time.now)
-      @cached_events = fetch_events(@gcal_identifier)
+      @cached_events = fetch_events(@gcal_identifier).map{ |event| {
+          :summary => event.summary || 'Private or unspecified',
+          :start_time => event.start.date_time,
+          :start_time_string => event.start.date || event.start.date_time.strftime("%l:%M %P"),
+          :end_time => event.end.date_time,
+          :end_time_string => event.end.date || event.end.date_time.strftime("%l:%M %P"),
+          :organiser => event.organizer ? ( event.organizer.display_name || event.organizer.email) : 'Private or unspecified',
+          :now => DateTime.now.between?(event.start.date_time, event.end.date_time)
+        }
+      }
       @events_cache_expires = Time.now + CACHE_EXPIRY_TIMEOUT
     end
 
-    {
-      now: @cached_events.select{ |event| DateTime.now.between?(event.start.date_time, event.end.date_time)},
-      later: @cached_events.select{ |event| event.start.date_time >= DateTime.now},
-    }
+    @cached_events
   end
 end
 
