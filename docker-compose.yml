@@ -7,3 +7,6 @@ services:
     container_name: room-usage-dashboard_web
     stdin_open: true
     tty: true
+    volumes:
+      - .:/srv/room-usage-dashboard/
+    command: bash -c "rerun 'ruby app.rb'"

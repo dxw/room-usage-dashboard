@@ -38,6 +38,9 @@ GEM
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
     jwt (2.1.0)
+    listen (3.2.1)
+      rb-fsevent (~> 0.10, >= 0.10.3)
+      rb-inotify (~> 0.9, >= 0.9.10)
     little-plugger (1.1.4)
     logging (2.2.2)
       little-plugger (~> 1.1)
@@ -66,6 +69,8 @@ GEM
       declarative (< 0.1.0)
       declarative-option (< 0.2.0)
       uber (< 0.2.0)
+    rerun (0.13.0)
+      listen (~> 3.0)
     retriable (3.1.2)
     sass (3.5.7)
       sass-listen (~> 4.0.0)
@@ -100,6 +105,7 @@ DEPENDENCIES
   haml
   pry
   rack (>= 2.0.6)
+  rerun
   sass
   sinatra
   terrafile
