@@ -12,6 +12,9 @@ OOB_URI = 'urn:ietf:wg:oauth:2.0:oob'.freeze
 TOKEN_PATH = 'token.yaml'.freeze
 SCOPE = Google::Apis::CalendarV3::AUTH_CALENDAR_READONLY
 
+PRESENCE_INDICATORS_ACTIVE_START = 8
+PRESENCE_INDICATORS_ACTIVE_END = 19
+
 set :bind, '0.0.0.0'
 set :port, '9292'
 
@@ -70,11 +73,12 @@ def fetch_events(calendar_id)
 end
 
 class Room
-  attr_reader :name, :css_class
-  def initialize(name:, css_class:, gcal_identifier:)
+  attr_reader :name, :css_class, :presence_colour_rgb
+  def initialize(name:, css_class:, gcal_identifier:, presence_colour_rgb: [255, 255, 255])
     @name = name
     @css_class = css_class
     @gcal_identifier = gcal_identifier
+    @presence_colour_rgb = presence_colour_rgb
     @events_cache_expires = Time.now
   end
 
@@ -82,11 +86,39 @@ class Room
     events.select{ |event| event[:now] }.empty?
   end
 
+  def upcoming_event_today
+    events.select{ |event| not event[:now] }.any?
+  end
+
   def empty_until_string
-    if empty and not events.empty?
+    if upcoming_event_today
       events[0][:start_time_string]
     else
       "Tomorrow"
+    end
+  end
+
+  def minutes_to_next_event
+    if events.empty?
+      false
+    else
+      if empty
+        ((events[0][:start_time] - DateTime.now) * 24 * 60).to_i
+      else
+        if upcoming_event_today
+          ((events[1][:start_time] - DateTime.now) * 24 * 60).to_i
+        else
+          false
+        end
+      end
+    end
+  end
+
+  def minutes_to_end_of_event
+    if events.empty?
+      false
+    else
+      ((events[0][:end_time] - DateTime.now) * 24 * 60).to_i
     end
   end
 
@@ -128,22 +160,27 @@ ROOMS = {
   leeds_mustard: Room.new(
     name: 'Col. Mustard',
     css_class: 'room-leeds__mustard',
-    gcal_identifier: 'dxw.com_18862haevrjfegh8jgp0540eipjn86gb74s3ac9n6spj6c9l6g@resource.calendar.google.com'
+    gcal_identifier: 'dxw.com_18862haevrjfegh8jgp0540eipjn86gb74s3ac9n6spj6c9l6g@resource.calendar.google.com',
+    presence_colour_rgb: [168, 87, 17]
+
   ),
   leeds_peacock: Room.new(
     name: 'Dr. Peacock',
     css_class: 'room-leeds__peacock',
-    gcal_identifier: 'dxw.com_188326f7n3qtqiqjmqptmimskfsmu6g86cp38dhk68s34@resource.calendar.google.com'
+    gcal_identifier: 'dxw.com_188326f7n3qtqiqjmqptmimskfsmu6g86cp38dhk68s34@resource.calendar.google.com',
+    presence_colour_rgb: [50, 139, 168]
   ),
   leeds_plum: Room.new(
     name: 'Prof. Plum',
     css_class: 'room-leeds__plum',
-    gcal_identifier: 'dxw.com_188al9agrcprmgaki2tcu1r5i0eim6gb64o30dpj6opj4d9g6s@resource.calendar.google.com'
+    gcal_identifier: 'dxw.com_188al9agrcprmgaki2tcu1r5i0eim6gb64o30dpj6opj4d9g6s@resource.calendar.google.com',
+    presence_colour_rgb: [59, 11, 59]
   ),
   leeds_green: Room.new(
     name: 'Revd. Green',
     css_class: 'room-leeds__green',
-    gcal_identifier: 'dxw.com_1887p1bi29mkqi6sgnh07chkatufk6ga64o32chj70q32dhn@resource.calendar.google.com'
+    gcal_identifier: 'dxw.com_1887p1bi29mkqi6sgnh07chkatufk6ga64o32chj70q32dhn@resource.calendar.google.com',
+    presence_colour_rgb: [20, 87, 15]
   ),
 }.freeze
 
@@ -183,6 +220,22 @@ get '/board/:slug' do
   @rooms = board[:rooms]
   @today = Date.today
   haml :multi_room
+end
+
+get '/room/:slug.json' do
+  content_type :json
+
+  room = ROOMS[params['slug'].to_sym]
+
+  {
+    :colour => room.presence_colour_rgb,
+    :enable_presence_device => DateTime.now.hour.between?(PRESENCE_INDICATORS_ACTIVE_START, PRESENCE_INDICATORS_ACTIVE_END),
+    :empty => room.empty,
+    :minutes_to_next_event => room.minutes_to_next_event,
+    :minutes_to_end_of_event => room.minutes_to_end_of_event,
+    :upcoming_event_today => room.upcoming_event_today,
+    :events => (room.events unless params['compact'])
+  }.compact.to_json
 end
 
 get '/room/:slug' do
