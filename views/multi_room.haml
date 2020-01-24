@@ -13,38 +13,20 @@
       - @rooms.each do |room|
         .room{:class => room.css_class}
           %h2= room.name
-          %ul.events-now
-            - if room.events[:now].empty?
-              %li.empty-now
-                .datetime
+          %ul
+            - if room.empty
+              %li.event.empty
+                .datetime Until<br>#{room.empty_until_string}
                 .title Empty
-            - else
-              - room.events[:now].each do |event|
-                %li.busy-now
-                  .datetime= "Until<br>#{event.end.date || event.end.date_time.strftime("%l:%M %P")}"
-                  .title
-                    = event.summary || 'Private or unspecified'
-                  %em.organiser
-                    - if event.organizer
-                      = "#{event.organizer.display_name || event.organizer.email}"
-                    - else
-                      Private or unspecified
-
-    .calendar{"style" => "grid-template-columns: repeat(#{@rooms.count}, 1fr)"}
-      - @rooms.each do |room|
-        .room{:class => room.css_class}
-          - if not room.events[:later].empty?
-            %ul
-              - room.events[:later].each do |event|
-                %li
-                  .datetime= "#{event.start.date || event.start.date_time.strftime("%l:%M %P")} – #{event.end.date || event.end.date_time.strftime("%l:%M %P")}"
-                  .title
-                    = event.summary || 'Private or unspecified'
-                  %em.organiser
-                    - if event.organizer
-                      = "#{event.organizer.display_name || event.organizer.email}"
-                    - else
-                      Private or unspecified
+            - room.events.each do |event|
+              %li.event{:class => ("now" if event[:now])}
+                .datetime
+                  - if event[:now]
+                    Until<br>#{event[:end_time_string]}
+                  - else
+                    #{event[:start_time_string]} – #{event[:end_time_string]}
+                .title= event[:summary]
+                %em.organiser= event[:organiser]
 
 - if @show_clock
   :javascript
@@ -58,3 +40,21 @@
 
     updateClock();
     setInterval(updateClock, 10000);
+
+:javascript
+
+  var findClass = document.getElementsByClassName("event");
+  var tallest = 0;
+
+  for(i = 0; i < findClass.length; i++)
+  {
+    var element = findClass[i];
+    var elementHeight = element.offsetHeight;
+    tallest = (elementHeight>tallest ? elementHeight : tallest);
+  }
+  for(i = 0; i < findClass.length; i++)
+  {
+    findClass[i].style.height = tallest + "px";
+  }
+
+  equalHeights('calentry')
