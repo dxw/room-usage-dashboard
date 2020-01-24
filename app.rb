@@ -185,6 +185,14 @@ get '/board/:slug' do
   haml :multi_room
 end
 
+get '/room/:slug' do
+
+  @room = ROOMS[params['slug'].to_sym]
+  @today = Date.today
+
+  haml :room
+end
+
 get '/check' do
   'Im alive!'
 end

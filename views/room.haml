@@ -1,0 +1,25 @@
+%html
+  %head
+    %title #{@room.name} - Room Dashboards - dxw
+    %link{:rel => 'stylesheet', :type => 'text/css', :href => '/stylesheets/styles.css'}
+    %meta{'http-equiv' => 'refresh', :content => '300'}
+
+  %body.kindle
+    %h1
+      %span= @room.name
+    .calendar
+      .room{:class => @room.css_class}
+        %ul
+          - if @room.empty
+            %li.event.empty
+              .datetime Until<br>#{@room.empty_until_string}
+              .title Empty
+          - @room.events.each do |event|
+            %li.event{:class => ("now" if event[:now])}
+              .datetime
+                - if event[:now]
+                  Until<br>#{event[:end_time_string]}
+                - else
+                  #{event[:start_time_string]} – #{event[:end_time_string]}
+              .title= event[:summary]
+              %em.organiser= event[:organiser]
