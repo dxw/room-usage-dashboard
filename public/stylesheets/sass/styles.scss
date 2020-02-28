@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Lato');
+@import url('https://fonts.googleapis.com/css?family=Cardo:700|Poppins:600,800&display=swap');
 @import 'normalize';
 
 $brand-primary: #006998;
@@ -34,8 +34,9 @@ $leeds-green: #2b6e10;
 
 body {
   background-color: $light-grey;
-  color: #000;
-  font-family: 'Lato', helvetica, arial, sans-serif;
+  color: $black;
+  font-family: 'Poppins', helvetica, arial, sans-serif;
+  font-weight: 600;
   font-size: 24px;
   line-height: 1.5;
 	-webkit-font-smoothing: antialiased;
@@ -45,6 +46,7 @@ body {
 h1 {
   padding-left: 40px;
   color: $black;
+  font-weight: 800;
 }
 
 h1 #datetime_time {
@@ -145,6 +147,7 @@ h1 #datetime_time {
   }
 
   ul {
+    font-weight: 500;
     padding-left: 0;
     margin-top: 0;
     margin-bottom: 0;
@@ -165,19 +168,12 @@ h1 #datetime_time {
   }
 
   .title {
-    font-weight: bold;
     padding-left: 10px;
     border-left: 1px solid rgba(255,255,255,0.7);
   }
 
-  .datetime {
-    font-style: normal;
-    font-weight: bold;
-  }
-
-  em.organiser {
+  .organiser {
     display: block;
-    font-style: normal;
     font-size: 0.8em;
     margin-top: 5px;
     grid-column-start: 2;
