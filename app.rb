@@ -144,41 +144,41 @@ end
 ROOMS = {
   hoxton_ground: Room.new(
     name: 'Main Meeting Room',
-    css_class: 'room__1',
+    css_class: 'room__hoxton-ground',
     gcal_identifier: 'dxw.com_2d36303034323634352d353334@resource.calendar.google.com'
   ),
   hoxton_hide: Room.new(
     name: 'The Hide',
-    css_class: 'room__2',
+    css_class: 'room__hoxton-hide',
     gcal_identifier: 'dxw.com_3936393930353336393539@resource.calendar.google.com'
   ),
   hoxton_wellbeing: Room.new(
     name: 'Wellbeing Room',
-    css_class: 'room__3',
+    css_class: 'room__hoxton-wellbeing',
     gcal_identifier: 'dxw.com_3437393236383531353437@resource.calendar.google.com'
   ),
   leeds_mustard: Room.new(
     name: 'Col. Mustard',
-    css_class: 'room-leeds__mustard',
+    css_class: 'room__leeds-mustard',
     gcal_identifier: 'dxw.com_18862haevrjfegh8jgp0540eipjn86gb74s3ac9n6spj6c9l6g@resource.calendar.google.com',
     presence_colour_rgb: [168, 87, 17]
 
   ),
   leeds_peacock: Room.new(
     name: 'Dr. Peacock',
-    css_class: 'room-leeds__peacock',
+    css_class: 'room__leeds-peacock',
     gcal_identifier: 'dxw.com_188326f7n3qtqiqjmqptmimskfsmu6g86cp38dhk68s34@resource.calendar.google.com',
     presence_colour_rgb: [50, 139, 168]
   ),
   leeds_plum: Room.new(
     name: 'Prof. Plum',
-    css_class: 'room-leeds__plum',
+    css_class: 'room__leeds-plum',
     gcal_identifier: 'dxw.com_188al9agrcprmgaki2tcu1r5i0eim6gb64o30dpj6opj4d9g6s@resource.calendar.google.com',
     presence_colour_rgb: [59, 11, 59]
   ),
   leeds_green: Room.new(
     name: 'Revd. Green',
-    css_class: 'room-leeds__green',
+    css_class: 'room__leeds-green',
     gcal_identifier: 'dxw.com_1887p1bi29mkqi6sgnh07chkatufk6ga64o32chj70q32dhn@resource.calendar.google.com',
     presence_colour_rgb: [20, 87, 15]
   ),
