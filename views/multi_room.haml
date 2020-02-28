@@ -26,7 +26,7 @@
                   - else
                     #{event[:start_time_string]} – #{event[:end_time_string]}
                 .title= event[:summary]
-                %em.organiser= event[:organiser]
+                .organiser= event[:organiser]
 
 - if @show_clock
   :javascript

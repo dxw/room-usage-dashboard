@@ -1,41 +1,52 @@
-@import url('https://fonts.googleapis.com/css?family=Lato');
+@import url('https://fonts.googleapis.com/css?family=Cardo:700|Poppins:600,800&display=swap');
 @import 'normalize';
 
-$brand-primary: #006998;
-$brand-secondary: #1ca4de;
-$accent-colour: #5b527f;
+$navy-dark: #17212c;
+$navy: #243746;
+$cream: #f3f1e9;
+$ivory: #f9f8f5;
 
-$dxw-light-green: #3bc492;
-$dxw-green: #006874;
-$dxw-orange: #fe603a;
-$dxw-yellow: #ffb72c;
-$dxw-red: #9f1f1f;
-$dxw-pink: #b15fa2;
-$dxw-turquoise: #00a0b0;
-$black: #283133;
-$dark-grey: #4c535a;
-$grey: #95989a;
-$medium-grey: #eeeeee;
-$light-grey: #f2f2f2;
-$white: #ffffff;
+$grey: #bdbdbd;
+$grey-light: #efefec;
 
-$room1: $brand-secondary;
-$room2: $brand-primary;
-$room3: $dxw-turquoise;
+$yellow: #ff9e18;
+$yellow-mid: #ffb259;
+$yellow-light: #fcd672;
+$orange: #ff5c35;
+$orange-mid: #ff8d6b;
+$orange-light: #ffa489;
+$red: #ff595a;
+$red-mid: #ff8189;
+$red-light: #ffb1b9;
+$purple: #69488e;
+$purple-mid: #7473c0;
+$purple-light: #a7a4df;
+$teal: #09615d;
+$teal-mid: #009490;
+$teal-light: #80c7bc;
+$blue: #004876;
+$blue-mid: #009abf;
+$blue-light: #73c3d5;
 
-$leeds-mustard: #af8308;
-$leeds-peacock: $brand-primary;
-$leeds-plum: #7c12a6;
-$leeds-green: #2b6e10;
+
+$hoxton-ground: $blue;
+$hoxton-hide: $purple;
+$hoxton-wellbeing: $teal;
+
+$leeds-mustard: $yellow;
+$leeds-peacock: $blue-mid;
+$leeds-plum: $purple;
+$leeds-green: $teal-mid;
 
 * {
   box-sizing: border-box;
 }
 
 body {
-  background-color: $light-grey;
-  color: #000;
-  font-family: 'Lato', helvetica, arial, sans-serif;
+  background-color: $ivory;
+  color: $navy;
+  font-family: 'Poppins', helvetica, arial, sans-serif;
+  font-weight: 600;
   font-size: 24px;
   line-height: 1.5;
 	-webkit-font-smoothing: antialiased;
@@ -44,7 +55,7 @@ body {
 
 h1 {
   padding-left: 40px;
-  color: $black;
+  font-weight: 800;
 }
 
 h1 #datetime_time {
@@ -72,6 +83,7 @@ h1 #datetime_time {
     li {
 
       min-height: 5em;
+      text-shadow: 0px 0px 4px darken($dark-colour, 8);
 
       &.now {
         background-color: darken($base-colour, 4) !important;
@@ -79,7 +91,8 @@ h1 #datetime_time {
 
       &.empty {
         color: $dark-colour;
-        background: mix(white, $base-colour, 60%) !important;
+        background: mix(white, $base-colour, 80%) !important;
+        text-shadow: none;
 
         .title {
           border-color: $dark-colour;
@@ -89,13 +102,13 @@ h1 #datetime_time {
     }
 
     li {
-      $desaturated-base: mix(white, $base-colour, 20%);
+      $desaturated-base: mix(white, $base-colour, 15%);
       background-color: $desaturated-base;
       &:nth-child(1) {
         border-bottom: 6px solid darken($base-colour, 10);
       }
       &:nth-child(even) {
-        background-color: darken($desaturated-base, 4);
+        background-color: darken($desaturated-base, 6);
       }
     }
   }
@@ -107,7 +120,7 @@ h1 #datetime_time {
   flex-direction: column;
   justify-content: start;
   align-items: stretch;
-  color: $white;
+  color: $ivory;
 
   h2 {
     font-size: 32px;
@@ -116,35 +129,36 @@ h1 #datetime_time {
     margin-bottom: .3em;
   }
 
-  &.room__1 {
-    @include room-colours($room1);
+  &.room__hoxton-ground {
+    @include room-colours($hoxton-ground);
   }
 
-  &.room__2 {
-    @include room-colours($room2);
+  &.room__hoxton-hide {
+    @include room-colours($hoxton-hide);
   }
 
-  &.room__3 {
-    @include room-colours($room3);
+  &.room__hoxton-wellbeing {
+    @include room-colours($hoxton-wellbeing);
   }
 
-  &.room-leeds__mustard {
+  &.room__leeds-mustard {
     @include room-colours($leeds-mustard);
   }
 
-  &.room-leeds__peacock {
+  &.room__leeds-peacock {
     @include room-colours($leeds-peacock);
   }
 
-  &.room-leeds__plum {
+  &.room__leeds-plum {
     @include room-colours($leeds-plum);
   }
 
-  &.room-leeds__green {
+  &.room__leeds-green {
     @include room-colours($leeds-green);
   }
 
   ul {
+    font-weight: 500;
     padding-left: 0;
     margin-top: 0;
     margin-bottom: 0;
@@ -165,19 +179,12 @@ h1 #datetime_time {
   }
 
   .title {
-    font-weight: bold;
     padding-left: 10px;
     border-left: 1px solid rgba(255,255,255,0.7);
   }
 
-  .datetime {
-    font-style: normal;
-    font-weight: bold;
-  }
-
-  em.organiser {
+  .organiser {
     display: block;
-    font-style: normal;
     font-size: 0.8em;
     margin-top: 5px;
     grid-column-start: 2;
