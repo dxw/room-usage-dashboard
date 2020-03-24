@@ -1,6 +1,0 @@
-# https://github.com/npalm/terraform-aws-ecs-service/blob/master/README.md
-# Using dxw fork which contains updates for terraform 0.12
-# PR: https://github.com/npalm/terraform-aws-ecs-service/pull/20
-terraform-aws-ecs-service:
-  source: "git@github.com:dxw/terraform-aws-ecs-service"
-  version: "f79cd6630175419950d2d5743dbb7b1db937af84"
