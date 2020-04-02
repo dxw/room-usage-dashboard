@@ -228,6 +228,10 @@ BOARDS = {
 }.freeze
 
 get '/' do
+  redirect('/board/dxw')
+end
+
+get '/hoxton' do
   redirect('/board/hoxton')
 end
 
