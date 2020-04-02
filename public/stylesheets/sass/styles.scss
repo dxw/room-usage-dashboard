@@ -38,6 +38,10 @@ $leeds-peacock: $blue-mid;
 $leeds-plum: $purple;
 $leeds-green: $teal-mid;
 
+$zoom-a: $blue-mid;
+$zoom-b: $yellow;
+$zoom-c: $purple-mid;
+
 * {
   box-sizing: border-box;
 }
@@ -155,6 +159,18 @@ h1 #datetime_time {
 
   &.room__leeds-green {
     @include room-colours($leeds-green);
+  }
+
+  &.room__zoom-a {
+    @include room-colours($zoom-a);
+  }
+
+  &.room__zoom-b {
+    @include room-colours($zoom-b);
+  }
+
+  &.room__zoom-c {
+    @include room-colours($zoom-c);
   }
 
   ul {
