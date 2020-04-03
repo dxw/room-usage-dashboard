@@ -227,6 +227,12 @@ BOARDS = {
   },
 }.freeze
 
+
+use Rack::Auth::Basic do |username, password|
+  username == ENV.fetch('HTTP_BASIC_USER') and password == ENV.fetch('HTTP_BASIC_PASSWORD')
+end
+
+
 get '/' do
   redirect('/board/dxw')
 end
