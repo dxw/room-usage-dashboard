@@ -162,7 +162,6 @@ ROOMS = {
     css_class: 'room__leeds-mustard',
     gcal_identifier: 'dxw.com_18862haevrjfegh8jgp0540eipjn86gb74s3ac9n6spj6c9l6g@resource.calendar.google.com',
     presence_colour_rgb: [168, 87, 17]
-
   ),
   leeds_peacock: Room.new(
     name: 'Dr. Peacock',
@@ -182,9 +181,32 @@ ROOMS = {
     gcal_identifier: 'dxw.com_1887p1bi29mkqi6sgnh07chkatufk6ga64o32chj70q32dhn@resource.calendar.google.com',
     presence_colour_rgb: [20, 87, 15]
   ),
+  zoom_a: Room.new(
+    name: 'Zoom-Call-A',
+    css_class: 'room__zoom-a',
+    gcal_identifier: 'dxw.com_188fvcktkaps6grlmf2sr2lhn6nnk@resource.calendar.google.com'
+  ),
+  zoom_b: Room.new(
+    name: 'Zoom-Call-B',
+    css_class: 'room__zoom-b',
+    gcal_identifier: 'dxw.com_188ejcf5p6aluidmn9650faudo5eg@resource.calendar.google.com'
+  ),
+  zoom_c: Room.new(
+    name: 'Zoom-Call-C',
+    css_class: 'room__zoom-c',
+    gcal_identifier: 'dxw.com_188drohphtvniidqkrud8jujqvvqu@resource.calendar.google.com'
+  ),
 }.freeze
 
 BOARDS = {
+  dxw: {
+    name: 'dxw',
+    rooms: [
+      ROOMS[:zoom_a],
+      ROOMS[:zoom_b],
+      ROOMS[:zoom_c],
+    ]
+  },
   hoxton: {
     name: 'Hoxton Office',
     rooms: [
@@ -206,6 +228,10 @@ BOARDS = {
 }.freeze
 
 get '/' do
+  redirect('/board/dxw')
+end
+
+get '/hoxton' do
   redirect('/board/hoxton')
 end
 
