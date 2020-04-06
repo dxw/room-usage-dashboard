@@ -228,10 +228,20 @@ BOARDS = {
 }.freeze
 
 
-use Rack::Auth::Basic do |username, password|
-  username == ENV.fetch('HTTP_BASIC_USER') and password == ENV.fetch('HTTP_BASIC_PASSWORD')
+helpers do
+  def protected!
+    return if authorized?
+    headers['WWW-Authenticate'] = 'Basic realm="Restricted Area"'
+    halt 401, "Not authorized\n"
+  end
+
+  def authorized?
+    @auth ||=  Rack::Auth::Basic::Request.new(request.env)
+    @auth.provided? && @auth.basic? && @auth.credentials == [ENV.fetch('HTTP_BASIC_USER'), ENV.fetch('HTTP_BASIC_PASSWORD')]
+  end
 end
 
+before { protected! unless request.path_info == '/check' }
 
 get '/' do
   redirect('/board/dxw')
