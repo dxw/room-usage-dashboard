@@ -3,7 +3,7 @@ require 'service'
 class Room
   attr_reader :name, :css_class, :presence_colour_rgb
 
-  def initialize(name:, css_class:, gcal_identifier:, presence_colour_rgb: [255, 255, 255])
+  def initialize(name:, css_class:, gcal_identifier:, presence_colour_rgb:)
     @name = name
     @css_class = css_class
     @gcal_identifier = gcal_identifier

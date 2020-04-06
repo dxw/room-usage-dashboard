@@ -6,7 +6,7 @@ Tells you what's going on in which rooms and when.
 
 ### Rooms
 
-New rooms are defined in the `ROOMS` hash as instances of `Room`. You'll need
+Rooms and their associated calendars are defined in `rooms.json`. You'll need
 their Google Calendar identifier, which you can find in the calendar's settings
 page.
 
