@@ -1,3 +1,5 @@
+require 'service'
+
 class Room
   attr_reader :name, :css_class, :presence_colour_rgb
 
