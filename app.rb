@@ -21,11 +21,11 @@ set :port, '9292'
 CACHE_EXPIRY_TIMEOUT = 60  # How long a room events API hit should cache, in seconds
 
 ROOMS = JSON.parse(File.read("rooms.json")).map { |e|
-  [e["slug"].to_sym, Room.new(
-    name: e["name"],
-    css_class: e["css_class"],
-    gcal_identifier: e["gcal_identifier"],
-    presence_colour_rgb: e["presence_colour_rgb"].present? ? e["presence_colour_rgb"] : [255, 255, 255]
+  [e.fetch("slug").to_sym, Room.new(
+    name: e.fetch("name"),
+    css_class: e.fetch("css_class"),
+    gcal_identifier: e.fetch("gcal_identifier"),
+    presence_colour_rgb: e.fetch("presence_colour_rgb", [255, 255, 255])
   )]
 }.to_h.freeze
 
