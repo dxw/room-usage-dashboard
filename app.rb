@@ -29,35 +29,13 @@ ROOMS = JSON.parse(File.read("rooms.json")).map { |e|
   )]
 }.to_h.freeze
 
-BOARDS = {
-  dxw: {
-    name: 'dxw',
-    rooms: [
-      ROOMS[:zoom_a],
-      ROOMS[:zoom_b],
-      ROOMS[:zoom_c],
-    ]
-  },
-  hoxton: {
-    name: 'Hoxton Office',
-    rooms: [
-      ROOMS[:hoxton_ground],
-      ROOMS[:hoxton_hide],
-      ROOMS[:hoxton_wellbeing],
-    ]
-  },
-  leeds: {
-    name: 'Leeds Office',
-    rooms: [
-      ROOMS[:leeds_mustard],
-      ROOMS[:leeds_peacock],
-      ROOMS[:leeds_plum],
-      ROOMS[:leeds_green],
-    ],
-    show_clock: true
-  },
-}.freeze
-
+BOARDS = JSON.parse(File.read("boards.json")).map { |e|
+  [e.fetch("slug").to_sym, {
+    name: e.fetch("name"),
+    rooms: e.fetch("rooms").map { |e| ROOMS[e.to_sym] },
+    show_clock: e.fetch("show_clock", false)
+  }]
+}.to_h.freeze
 
 helpers do
   def protected!
