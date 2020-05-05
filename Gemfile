@@ -12,3 +12,4 @@ gem 'rerun'
 gem 'sinatra'
 gem 'terrafile'
 gem 'rack', '>= 2.0.6' # CVE-2018-16471, CVE-2018-16470
+gem 'json'
