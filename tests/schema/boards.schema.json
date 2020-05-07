@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Boards",
+  "description": "A list of room availability boards",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "slug": {
+        "description": "A unique slug identifying this board",
+        "type": "string",
+        "pattern": "^[a-z-]+$"
+      },
+      "name": {
+        "description": "The name of this board",
+        "type": "string"
+      },
+      "rooms": {
+        "description": "An array of the rooms to include on this board",
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^[a-z_]+$"
+        },
+        "minItems": 1
+      },
+      "show_clock": {
+        "description": "Should the board display a clock?",
+        "type": "boolean"
+      }
+    },
+    "required": ["slug", "name", "rooms"],
+    "additionalProperties": false
+  },
+  "minItems": 1
+}

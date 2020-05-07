@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Rooms",
+  "description": "A list of rooms and their associated calendars",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "slug": {
+        "description": "A unique slug identifying this room",
+        "type": "string",
+        "pattern": "^[a-z_]+$"
+      },
+      "name": {
+        "description": "The name of this room",
+        "type": "string"
+      },
+      "css_class": {
+        "description": "The CSS class used to apply this room's colours",
+        "type": "string",
+        "pattern": "^[a-z-_]+$"
+      },
+      "gcal_identifier": {
+        "description": "The unique identifier for the Google calendar representing this room",
+        "type": "string",
+        "pattern": "^dxw\\.com_[0-9a-z]+@resource\\.calendar\\.google\\.com$"
+      },
+      "presence_colour_rgb": {
+        "description": "An array of RGB values to set the identifying colour of this room's free/busy indicator",
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 255
+        },
+        "minItems": 3,
+        "maxItems": 3
+      }
+    },
+    "required": ["slug", "name", "css_class", "gcal_identifier"],
+    "additionalProperties": false
+  },
+  "minItems": 1
+}
