@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# script/bootstrap: Resolve all dependencies that the application requires to
+#                   run.
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+if [ -f "package.json" ]; then
+	echo "==> Installing npm dependencies..."
+	npm install --silent --no-spin
+fi
+
+if [ -f "Gemfile" ]; then
+  echo "==> Installing gem dependencies…"
+  bundle check >/dev/null 2>&1  || {
+    bundle install --quiet --without production
+  }
+fi

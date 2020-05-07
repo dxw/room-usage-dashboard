@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# script/update: Update application to run for its current checkout.
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+script/bootstrap
+
+# This is a placeholder for any data update tasks, should the dashboard
+# eventually begin to hold its own data state.
