@@ -28,18 +28,14 @@ class Room
   end
 
   def minutes_to_next_event
-    if events.empty?
+    if events.empty? # No upcoming events at all
       false
+    elsif empty # Currently empty, but won't be later
+      ((events[0][:start_time] - DateTime.now) * 24 * 60).to_i
+    elsif upcoming_event_today # Currently busy, and another event later today
+      ((events[1][:start_time] - DateTime.now) * 24 * 60).to_i
     else
-      if empty
-        ((events[0][:start_time] - DateTime.now) * 24 * 60).to_i
-      else
-        if upcoming_event_today
-          ((events[1][:start_time] - DateTime.now) * 24 * 60).to_i
-        else
-          false
-        end
-      end
+      false
     end
   end
 
