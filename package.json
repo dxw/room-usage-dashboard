@@ -1,0 +1,27 @@
+{
+  "name": "room-usage-dashboard",
+  "version": "1.0.0",
+  "description": "Tells you what's going on in which rooms and when.",
+  "main": "app.rb",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "ajv-cli": "^3.1.0",
+    "prettier": "^2.0.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "script/test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dxw/room-usage-dashboard.git"
+  },
+  "author": "dxw",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dxw/room-usage-dashboard/issues"
+  },
+  "homepage": "https://github.com/dxw/room-usage-dashboard#readme"
+}

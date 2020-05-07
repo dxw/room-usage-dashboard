@@ -40,10 +40,10 @@
   },
   {
     "slug": "leeds_green",
-     "name": "Revd. Green",
-     "css_class": "room__leeds-green",
-     "gcal_identifier": "dxw.com_1887p1bi29mkqi6sgnh07chkatufk6ga64o32chj70q32dhn@resource.calendar.google.com",
-     "presence_colour_rgb": [20, 87, 15]
+    "name": "Revd. Green",
+    "css_class": "room__leeds-green",
+    "gcal_identifier": "dxw.com_1887p1bi29mkqi6sgnh07chkatufk6ga64o32chj70q32dhn@resource.calendar.google.com",
+    "presence_colour_rgb": [20, 87, 15]
   },
   {
     "slug": "zoom_a",

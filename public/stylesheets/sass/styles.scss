@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Cardo:700|Poppins:600,800&display=swap');
-@import 'normalize';
+@import url("https://fonts.googleapis.com/css?family=Cardo:700|Poppins:600,800&display=swap");
+@import "normalize";
 
 $navy-dark: #17212c;
 $navy: #243746;
@@ -28,7 +28,6 @@ $blue: #004876;
 $blue-mid: #009abf;
 $blue-light: #73c3d5;
 
-
 $hoxton-ground: $blue;
 $hoxton-hide: $purple;
 $hoxton-wellbeing: $teal;
@@ -49,12 +48,12 @@ $zoom-c: $purple-mid;
 body {
   background-color: $ivory;
   color: $navy;
-  font-family: 'Poppins', helvetica, arial, sans-serif;
+  font-family: "Poppins", helvetica, arial, sans-serif;
   font-weight: 600;
   font-size: 24px;
   line-height: 1.5;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1 {
@@ -73,7 +72,6 @@ h1 #datetime_time {
 }
 
 @mixin room-colours($base-colour) {
-
   $dark-colour: darken($base-colour, 10);
 
   h2 {
@@ -81,11 +79,9 @@ h1 #datetime_time {
   }
 
   ul {
-
     border-top: 12px solid $dark-colour;
 
     li {
-
       min-height: 5em;
       text-shadow: 0px 0px 4px darken($dark-colour, 8);
 
@@ -102,7 +98,6 @@ h1 #datetime_time {
           border-color: $dark-colour;
         }
       }
-
     }
 
     li {
@@ -130,7 +125,7 @@ h1 #datetime_time {
     font-size: 32px;
     padding-left: 40px;
     margin: 0;
-    margin-bottom: .3em;
+    margin-bottom: 0.3em;
   }
 
   &.room__hoxton-ground {
@@ -196,7 +191,7 @@ h1 #datetime_time {
 
   .title {
     padding-left: 10px;
-    border-left: 1px solid rgba(255,255,255,0.7);
+    border-left: 1px solid rgba(255, 255, 255, 0.7);
   }
 
   .organiser {

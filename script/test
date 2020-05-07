@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# script/test: Run test suite for application. Optionally pass in a path to an
+#              individual test file to run a single test.
+
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+# We assume we're always running in an existing setup.
+# If this isn't the case (eg running in CI) then this will need a conditional to
+# detect a test environment and run script/setup instead.
+script/update
+
+echo "==> Running format checks…"
+
+bundle exec standardrb
+node_modules/.bin/prettier -c **/*.md **/*.scss **/*.json
+
+echo "==> Validating room JSON…"
+node_modules/.bin/ajv -s tests/schema/rooms.schema.json -d rooms.json
+
+echo "==> Validating boards JSON…"
+node_modules/.bin/ajv -s tests/schema/boards.schema.json -d boards.json

@@ -18,32 +18,33 @@ configuring boards.
 `BOARDS` is a hash of hashes, each hash defining the behaviour of that
 particular dashboard.
 
-* `:name` is a the title of the board. It's only displayed as the page title,
+- `:name` is a the title of the board. It's only displayed as the page title,
   not on the board itself.
-* `:rooms` is an array of room objects you want to know about (displayed left to
+- `:rooms` is an array of room objects you want to know about (displayed left to
   right on the board).
-* `:show_clock` toggles the clock in the top right hand corner of the board.
+- `:show_clock` toggles the clock in the top right hand corner of the board.
 
 New boards become accessible automatically at `/boards/{name}`.
 
 ## Getting Started
 
- - [Request a client ID and secret from Google](https://developers.google.com/calendar/quickstart/ruby),
-    by clicking 'ENABLE THE GOOGLE CALENDAR API' and save them into `.env`.
+- [Request a client ID and secret from Google](https://developers.google.com/calendar/quickstart/ruby),
+  by clicking 'ENABLE THE GOOGLE CALENDAR API' and save them into `.env`.
 
-     ```
-     GOOGLE_CLIENT_ID=…
-     GOOGLE_CLIENT_SECRET=…
-     ```
+  ```
+  GOOGLE_CLIENT_ID=…
+  GOOGLE_CLIENT_SECRET=…
+  ```
 
-    If you change your credentials you'll need to remove the `token.yaml` file
-    to get the app to reauthorise
- - On the first run, the app needs to get permission to fetch the calendars as a
-     user. The console will display a URL that you need to visit in your
-     browser, after you authorise the request, you'll be given a token. Copy and
-     paste this into the console and press enter
- - You can run the app locally with `docker-compose up`
- - Visit the dashboard at http://localhost:9292/
+  If you change your credentials you'll need to remove the `token.yaml` file
+  to get the app to reauthorise
+
+- On the first run, the app needs to get permission to fetch the calendars as a
+  user. The console will display a URL that you need to visit in your
+  browser, after you authorise the request, you'll be given a token. Copy and
+  paste this into the console and press enter
+- You can run the app locally with `docker-compose up`
+- Visit the dashboard at http://localhost:9292/
 
 ## Building the CSS
 
