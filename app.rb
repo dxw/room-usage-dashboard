@@ -97,5 +97,5 @@ get "/room/:slug" do
 end
 
 get "/check" do
-  "Im alive!"
+  "I'm alive!"
 end
