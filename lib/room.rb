@@ -68,7 +68,8 @@ class Room
 
   # Fetch the next 5 events today for this room
   def fetch_events(calendar_id)
-    response = service.list_events(calendar_id,
+    service_test = service
+    response = service_test.list_events(calendar_id,
       max_results: 5,
       single_events: true,
       order_by: "startTime",
@@ -78,7 +79,8 @@ class Room
     # filter out any declined events – they normally represent a clash or room release
     response.items.reject { |event|
       next if event.attendees.nil?
-      event.attendees.find(&:self).response_status == "declined"
+      # event.attendees.find(&:self).response_status == "declined"
+      event.attendees.all? { |attendee| attendee.response_status == "declined" }
     }
   end
 end
