@@ -23,3 +23,6 @@ node_modules/.bin/ajv -s tests/schema/rooms.schema.json -d rooms.json
 
 echo "==> Validating boards JSON…"
 node_modules/.bin/ajv -s tests/schema/boards.schema.json -d boards.json
+
+echo "==> Running tests..."
+bundle exec rspec
