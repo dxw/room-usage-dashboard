@@ -1,0 +1,2 @@
+---
+default: '{"client_id":"fakeclientid.apps.googleusercontent.com","access_token":"fake-access-token","refresh_token":"fake-refresh-access-token","scope":["https://www.googleapis.com/auth/calendar.readonly"],"expiration_time_millis":1594897355000}'

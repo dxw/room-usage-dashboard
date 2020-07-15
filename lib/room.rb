@@ -68,7 +68,8 @@ class Room
 
   # Fetch the next 5 events today for this room
   def fetch_events(calendar_id)
-    response = service.list_events(calendar_id,
+    service_test = service
+    response = service_test.list_events(calendar_id,
       max_results: 5,
       single_events: true,
       order_by: "startTime",

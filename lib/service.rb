@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 OOB_URI = "urn:ietf:wg:oauth:2.0:oob"
-TOKEN_PATH = "token.yaml"
+if ENV['RACK_ENV'] == 'test'
+  TOKEN_PATH = "spec/test_token.yaml"
+else
+  TOKEN_PATH = "token.yaml"
+end
 SCOPE = Google::Apis::CalendarV3::AUTH_CALENDAR_READONLY
 
 def authorize

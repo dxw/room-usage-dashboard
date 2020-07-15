@@ -1,6 +1,6 @@
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), "lib")
 
-require "dotenv/load"
+require "dotenv"
 require "active_support/core_ext/date_time"
 require "haml"
 require "sinatra"
@@ -11,6 +11,12 @@ require "fileutils"
 require "yaml"
 require "room"
 require "json"
+
+if ENV['RACK_ENV'] == 'test'
+  Dotenv.load("spec/test.env")
+else
+  Dotenv.load
+end
 
 PRESENCE_INDICATORS_ACTIVE_START = 8
 PRESENCE_INDICATORS_ACTIVE_END = 19
@@ -45,6 +51,7 @@ helpers do
   end
 
   def authorized?
+    return true if ENV['RACK_ENV'] == 'test'
     @auth ||= Rack::Auth::Basic::Request.new(request.env)
     @auth.provided? && @auth.basic? && @auth.credentials == [ENV.fetch("HTTP_BASIC_USER"), ENV.fetch("HTTP_BASIC_PASSWORD")]
   end

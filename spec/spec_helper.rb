@@ -1,5 +1,7 @@
+ENV['RACK_ENV'] = 'test'
 require "rack/test"
-require "../app.rb"
+require_relative "../app.rb"
+require "webmock/rspec"
 
 module RspecHelper
   include Rack::Test::Methods

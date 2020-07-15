@@ -15,6 +15,9 @@ script/update
 
 echo "==> Running format checks…"
 
+echo "==> Running tests..."
+bundle exec rspec
+
 bundle exec standardrb
 node_modules/.bin/prettier -c **/*.md **/*.scss **/*.json
 
@@ -23,3 +26,4 @@ node_modules/.bin/ajv -s tests/schema/rooms.schema.json -d rooms.json
 
 echo "==> Validating boards JSON…"
 node_modules/.bin/ajv -s tests/schema/boards.schema.json -d boards.json
+
