@@ -1,0 +1,18 @@
+[
+  {
+    "slug": "dxw",
+    "name": "dxw",
+    "rooms": ["zoom_test01", "zoom_test02", "zoom_test03"]
+  },
+  {
+    "slug": "hoxton",
+    "name": "Hoxton Office",
+    "rooms": ["hoxton_test01", "hoxton_test02", "hoxton_test03"]
+  },
+  {
+    "slug": "leeds",
+    "name": "Leeds Office",
+    "rooms": ["leeds_test01", "leeds_test02", "leeds_test03", "leeds_test04"],
+    "show_clock": true
+  }
+]
