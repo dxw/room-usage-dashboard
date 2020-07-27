@@ -78,7 +78,7 @@ class Room
     # filter out any declined events – they normally represent a clash or room release
     response.items.reject { |event|
       next if event.attendees.nil?
-      event.attendees.find(&:self).response_status == "declined"
+      event.attendees.all? { |attendee| attendee.response_status == "declined" }
     }
   end
 end

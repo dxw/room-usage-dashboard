@@ -1,6 +1,6 @@
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), "lib")
 
-require "dotenv/load"
+require "dotenv"
 require "active_support/core_ext/date_time"
 require "haml"
 require "sinatra"
@@ -12,6 +12,20 @@ require "yaml"
 require "room"
 require "json"
 
+if ENV["RACK_ENV"] == "test"
+  Dotenv.load("spec/test.env")
+else
+  Dotenv.load
+end
+
+if ENV["RACK_ENV"] == "test"
+  ROOMS_JSON_PATH = "./spec/test_rooms.json"
+  BOARDS_JSON_PATH = "./spec/test_boards.json"
+else
+  ROOMS_JSON_PATH = "rooms.json"
+  BOARDS_JSON_PATH = "boards.json"
+end
+
 PRESENCE_INDICATORS_ACTIVE_START = 8
 PRESENCE_INDICATORS_ACTIVE_END = 19
 
@@ -20,7 +34,7 @@ set :port, "9292"
 
 CACHE_EXPIRY_TIMEOUT = 60 # How long a room events API hit should cache, in seconds
 
-ROOMS = JSON.parse(File.read("rooms.json")).map { |e|
+ROOMS = JSON.parse(File.read(ROOMS_JSON_PATH)).map { |e|
   [e.fetch("slug").to_sym, Room.new(
     name: e.fetch("name"),
     css_class: e.fetch("css_class"),
@@ -29,7 +43,7 @@ ROOMS = JSON.parse(File.read("rooms.json")).map { |e|
   )]
 }.to_h.freeze
 
-BOARDS = JSON.parse(File.read("boards.json")).map { |e|
+BOARDS = JSON.parse(File.read(BOARDS_JSON_PATH)).map { |e|
   [e.fetch("slug").to_sym, {
     name: e.fetch("name"),
     rooms: e.fetch("rooms").map { |e| ROOMS[e.to_sym] },
@@ -45,6 +59,7 @@ helpers do
   end
 
   def authorized?
+    return true if ENV["RACK_ENV"] == "test"
     @auth ||= Rack::Auth::Basic::Request.new(request.env)
     @auth.provided? && @auth.basic? && @auth.credentials == [ENV.fetch("HTTP_BASIC_USER"), ENV.fetch("HTTP_BASIC_PASSWORD")]
   end

@@ -8,7 +8,7 @@
     %h1
       %span#datetime_date #{@today.strftime('%A, %B %e')}
       -if @show_clock
-        %span#datetime_time
+        %span#datetime_time #{Time.now.strftime("%l:%M %P")}
     .calendar{"style" => "grid-template-columns: repeat(#{@rooms.count}, 1fr)"}
       - @rooms.each do |room|
         .room{:class => room.css_class}
@@ -44,4 +44,4 @@
     findClass[i].style.height = tallest + "px";
   }
 
-  equalHeights('calentry')
+
