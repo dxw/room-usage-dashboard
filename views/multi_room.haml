@@ -13,25 +13,7 @@
       - @rooms.each do |room|
         .room{:class => room.css_class}
           %h2= room.name
-          %ul
-            - if room.empty
-              %li.event.empty
-                .datetime
-                  Until<br>#{room.empty_until_string}
-                  - if room.minutes_to_next_event and room.minutes_to_next_event < 60
-                    <br>(#{room.minutes_to_next_event} mins)
-                .title Empty
-            - room.events.each do |event|
-              %li.event{:class => ("now" if event[:now])}
-                .datetime
-                  - if event[:now]
-                    Until<br>#{event[:end_time_string]}
-                    - if room.minutes_to_end_of_event and room.minutes_to_end_of_event < 60
-                      <br>(#{room.minutes_to_end_of_event} mins)
-                  - else
-                    #{event[:start_time_string]} – #{event[:end_time_string]}
-                .title= event[:summary]
-                .organiser= event[:organiser]
+          = haml(:_room, locals: {room: room})
 
 - if @show_clock
   :javascript
