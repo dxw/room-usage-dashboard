@@ -6,7 +6,7 @@
 
   %body
     %h1
-      %span#datetime_date #{@today.strftime('%A, %B %e')}
+      %span#datetime_date #{@today.strftime('%A, %B %-d')}
       -if @show_clock
         %span#datetime_time #{Time.now.strftime("%l:%M %P")}
     .calendar{"style" => "grid-template-columns: repeat(#{@rooms.count}, 1fr)"}

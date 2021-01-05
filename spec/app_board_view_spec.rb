@@ -11,7 +11,7 @@ RSpec.describe "Board view", type: :feature do
       stub_gcal_request(gcal_fake_response([]))
       visit "/board/dxw"
 
-      expect(page).to have_selector("#datetime_date", text: Date.today.strftime("%A, %B %e"))
+      expect(page).to have_selector("#datetime_date", text: Date.today.strftime("%A, %B %-d"))
     end
     it "shows all the Zoom Meeting Rooms" do
       stub_gcal_request(gcal_fake_response([]))
